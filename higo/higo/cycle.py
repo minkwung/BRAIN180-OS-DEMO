@@ -101,6 +101,25 @@ def render_report(rec: dict, gap: dict) -> str:
         agent = cs.get("agent") or {}
         if agent:
             L += [f"제안 작성: {agent.get('model', '?')} · 지시문 {agent.get('prompt_version', '?')}", ""]
+            cost = agent.get("cost")
+            if cost:
+                L += ["### 조사 비용", "", "| 항목 | 값 |", "|---|---|",
+                      f"| API 비용 | ${cost['spent_usd']:.2f} / 상한 ${cost['budget_usd']:.2f} |",
+                      f"| API 호출 | {cost['calls']}회 |",
+                      f"| 웹 검색 | {cost['web_searches']}회 |",
+                      f"| 토큰 (입력 / 캐시 읽기 / 출력) | {cost['input_tokens']:,} / {cost['cache_read_tokens']:,} / "
+                      f"{cost['output_tokens']:,} |", ""]
+            tasks = agent.get("tasks") or []
+            if tasks:
+                stop_ko = {"end_turn": "완료", "budget": "예산 소진", "max_requests": "호출 한도", "refusal": "거절",
+                           "max_tokens": "출력 한도"}
+                L += ["### 조사한 작업", "", "| 작업 | 대상 | 제안 | 검토(유지/강등/삭제) | 비용 | 종료 | 요약 |",
+                      "|---|---|---|---|---|---|---|"]
+                for t in tasks:
+                    L.append(f"| {t['label_ko']} | {t.get('target') or '—'} | {t['proposed']} | "
+                             f"{t['kept']}/{t['downgraded']}/{t['dropped']} | ${t['cost_usd']:.2f} | "
+                             f"{stop_ko.get(t['stop'], t['stop'])} | {(t.get('summary') or '').replace('|', '/')[:160]} |")
+                L.append("")
         groups = [(LOW, "## 1. 자동 반영 (위험도 낮음)", "원문 대조를 통과한 사실 확인형 항목입니다. "
                    "🔍 표시는 무작위 표본 감사 대상이니 확인해 주세요."),
                   (MEDIUM, "## 2. 묶음 승인 대기 (위험도 중간)", f"확인 후 `python -m higo approve --run {rid} --actor 이름` "

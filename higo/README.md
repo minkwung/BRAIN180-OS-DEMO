@@ -171,7 +171,10 @@ python -m higo export turtle > higo.ttl         # 트리플스토어
 python -m higo cycle --changeset examples/changeset.example.json --dry-run
 python -m higo gaps
 python -m higo bench
+python -m higo research --budget 5 --max-tasks 8   # Claude 조사 에이전트 (ANTHROPIC_API_KEY 필요)
 ```
+
+매주 월요일 GitHub Actions(`.github/workflows/higo-weekly.yml`)가 조사 에이전트를 주기당 5달러 상한으로 실행하고 PR 을 엽니다.
 
 ## 확장 로드맵
 

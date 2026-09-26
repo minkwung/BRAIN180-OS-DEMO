@@ -1,0 +1,23 @@
+{
+  "description": "조사 에이전트가 웹 검색·열람할 수 있는 사이트 목록. 원문 대조기도 이 사이트들에서 인용문을 확인한다. 도메인을 추가·삭제하면 다음 주기부터 적용된다.",
+  "allowed_domains": [
+    "plato.stanford.edu",
+    "iep.utm.edu",
+    "philpapers.org",
+    "en.wikisource.org",
+    "www.gutenberg.org",
+    "www.perseus.tufts.edu",
+    "archive.org",
+    "www.marxists.org",
+    "oll.libertyfund.org",
+    "www.econlib.org",
+    "www.wikidata.org",
+    "en.wikipedia.org",
+    "ko.wikipedia.org"
+  ],
+  "tier_hints": {
+    "1": "원전 전문을 제공하는 사이트(위키소스·구텐베르크·페르세우스·마르크시스트 아카이브·OLL·Econlib)의 원문",
+    "4": "스탠퍼드·인터넷 철학 백과사전(SEP·IEP) 항목",
+    "5": "위키백과·위키데이터 (단서 찾기용, 사실 확인 보조)"
+  }
+}

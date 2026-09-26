@@ -20,6 +20,9 @@
     python -m higo approve --run R… --actor 이름   # 주기 단위 묶음 승인
     python -m higo bench                    # 품질 기준 질문 채점
 
+  자동 갱신 (2단계: 조사 에이전트)
+    python -m higo research --budget 5 --max-tasks 8   # 조사 → 독립 검토 → 관문 → 보고서
+
 데이터의 원본은 data/ 디렉터리의 텍스트 파일이다 (--db 를 주지 않으면 메모리에서 작업 후
 변경 명령은 data/ 에 다시 저장한다).
 """
@@ -27,7 +30,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
+from pathlib import Path
 
 from . import datafiles, export
 from .core import HIGO
@@ -127,12 +132,37 @@ def main(argv: list[str] | None = None) -> None:
     s.add_argument("--actor", required=True)
     s.add_argument("--reason", default="")
     sub.add_parser("bench")
+    s = sub.add_parser("research", help="Claude 조사 에이전트로 한 주기 실행 (ANTHROPIC_API_KEY 필요)")
+    s.add_argument("--budget", type=float, default=5.0, help="주기당 API 비용 상한 (달러)")
+    s.add_argument("--max-tasks", type=int, default=8)
+    s.add_argument("--model", default=None)
+    s.add_argument("--no-review", action="store_true", help="독립 검토 생략 (권장하지 않음)")
+    s.add_argument("--dry-run", action="store_true", help="조사는 하되 data/ 에 반영하지 않음")
+    s.add_argument("--report", help="보고서를 이 경로에도 저장 (PR 본문용)")
     args = ap.parse_args(argv)
 
     if args.cmd == "serve":
         from .server import serve
         serve(args.db, args.host, args.port, data_dir=args.data)
         return
+    if args.cmd == "research":
+        from .agent import MODEL, research_changeset
+        from .cycle import run_cycle
+        if not (os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN")):
+            sys.exit("ANTHROPIC_API_KEY 가 필요합니다 (pip install anthropic 도 필요)")
+        cs = research_changeset(args.data, budget_usd=args.budget, max_tasks=args.max_tasks,
+                                model=args.model or MODEL, review=not args.no_review)
+        cost = cs["agent"]["cost"]
+        print(f"조사 완료: 제안 {len(cs['operations'])}건, 비용 ${cost['spent_usd']:.2f} / ${cost['budget_usd']:.2f}",
+              file=sys.stderr)
+        rec = run_cycle(args.data, cs, write=not args.dry_run)
+        if not args.dry_run:
+            (Path(args.data) / "runs" / f"{rec['run_id']}.changeset.json").write_text(
+                json.dumps(cs, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        if args.report:
+            Path(args.report).write_text(rec["report"], encoding="utf-8")
+        print(rec["report"])
+        sys.exit(0 if rec["ok"] else 2)
     if args.cmd == "cycle":
         from .changeset import load_changeset
         from .cycle import run_cycle

@@ -133,6 +133,10 @@ class ChangesetApplier:
         decision = base_risk(op)
         verdicts, vdetails = self._verify(evidence)
         decision = apply_verification(decision, evidence, verdicts)
+        if op.get("force_review") and decision.risk == LOW:
+            decision.escalate(MEDIUM, "독립 검토자가 강등 — 자동 반영하지 않음")
+        if op.get("review_note"):
+            decision.reasons.append(op["review_note"])
         res = OpResult(i, kind or "?", "", decision.risk, "pending", decision.reasons, verification=vdetails,
                        rationale=op.get("rationale", ""))
         handler = getattr(self, f"_op_{kind}", None)
