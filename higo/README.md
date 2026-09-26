@@ -7,6 +7,16 @@
 > 핵심 질문은 "플라톤은 누구인가?"가 아니라
 > **"인간은 무엇을 진리라고 생각해 왔으며, 그 생각은 어떤 경로를 통해 변화해 왔는가?"** 입니다.
 
+## 실행 화면
+
+| 그래프 탐색 | 질문 (Graph RAG) |
+|---|---|
+| ![그래프](docs/screenshots/1-graph.png) | ![질문](docs/screenshots/2-ask-freedom.png) |
+| **연결 분석** — 아리스토텔레스 → 제퍼슨 | **비교·논쟁** — 마르크스 vs 니체 |
+| ![연결 분석](docs/screenshots/3-connection.png) | ![비교](docs/screenshots/4-compare.png) |
+| **사상 DNA·지형도** — 칸트 | **검증 대기열** |
+| ![DNA](docs/screenshots/5-dna.png) | ![검증](docs/screenshots/6-review.png) |
+
 ## 빠른 시작
 
 외부 의존성 없이 Python 3.10+ 표준 라이브러리만으로 동작합니다.
