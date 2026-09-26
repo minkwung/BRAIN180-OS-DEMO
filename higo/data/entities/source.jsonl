@@ -1,0 +1,11 @@
+{"id":"source:aronson-camus-sartre","type":"Source","label":"R. Aronson, Camus and Sartre (2004)","label_ko":"애런슨, 『카뮈와 사르트르』","origin":"seed","status":"accepted","props":{"tier":3}}
+{"id":"source:copleston","type":"Source","label":"F. Copleston, A History of Philosophy (1946–1975)","label_ko":"코플스턴, 『서양철학사』","origin":"seed","status":"accepted","props":{"tier":3}}
+{"id":"source:diogenes-laertius","type":"Source","label":"Diogenes Laertius, Lives of Eminent Philosophers (3rd c.)","label_ko":"디오게네스 라에르티오스, 『유명한 철학자들의 생애』","description":"고대 전기 — 사제 관계에 대한 전승 기록","origin":"seed","status":"accepted","props":{"tier":2}}
+{"id":"source:kaufmann-nietzsche","type":"Source","label":"W. Kaufmann, Nietzsche: Philosopher, Psychologist, Antichrist (1950)","label_ko":"카우프만, 『니체』","origin":"seed","status":"accepted","props":{"tier":3}}
+{"id":"source:kuehn-kant","type":"Source","label":"M. Kuehn, Kant: A Biography (2001)","label_ko":"퀸, 『칸트 전기』","origin":"seed","status":"accepted","props":{"tier":3}}
+{"id":"source:monk-wittgenstein","type":"Source","label":"R. Monk, Ludwig Wittgenstein: The Duty of Genius (1990)","label_ko":"몽크, 『비트겐슈타인 평전』","origin":"seed","status":"accepted","props":{"tier":3}}
+{"id":"source:nadler-spinoza","type":"Source","label":"S. Nadler, Spinoza: A Life (1999)","label_ko":"내들러, 『스피노자 평전』","origin":"seed","status":"accepted","props":{"tier":3}}
+{"id":"source:schumpeter-hea","type":"Source","label":"J. A. Schumpeter, History of Economic Analysis (1954)","label_ko":"슘페터, 『경제분석의 역사』","origin":"seed","status":"accepted","props":{"tier":3}}
+{"id":"source:sep","type":"Source","label":"Stanford Encyclopedia of Philosophy (relevant entries)","label_ko":"스탠퍼드 철학 백과사전","description":"학술 백과사전 — 검토자가 구체적 항목을 지정해야 함","origin":"seed","status":"accepted","props":{"tier":4}}
+{"id":"source:strauss-nrh","type":"Source","label":"L. Strauss, Natural Right and History (1953)","label_ko":"슈트라우스, 『자연권과 역사』","origin":"seed","status":"accepted","props":{"tier":3}}
+{"id":"source:westfall-newton","type":"Source","label":"R. S. Westfall, Never at Rest: A Biography of Isaac Newton (1980)","label_ko":"웨스트폴, 『뉴턴 평전』","origin":"seed","status":"accepted","props":{"tier":3}}

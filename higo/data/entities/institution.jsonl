@@ -1,0 +1,10 @@
+{"id":"inst:academy","type":"Institution","label":"Plato's Academy","label_ko":"아카데메이아","description":"플라톤이 아테네에 세운 학원","start_year":-387,"origin":"seed","status":"accepted"}
+{"id":"inst:berlin","type":"Institution","label":"University of Berlin","label_ko":"베를린 대학","start_year":1810,"origin":"seed","status":"accepted"}
+{"id":"inst:cambridge","type":"Institution","label":"University of Cambridge","label_ko":"케임브리지 대학","start_year":1209,"origin":"seed","status":"accepted"}
+{"id":"inst:freiburg","type":"Institution","label":"University of Freiburg","label_ko":"프라이부르크 대학","start_year":1457,"origin":"seed","status":"accepted"}
+{"id":"inst:harvard","type":"Institution","label":"Harvard University","label_ko":"하버드 대학","start_year":1636,"origin":"seed","status":"accepted"}
+{"id":"inst:konigsberg","type":"Institution","label":"University of Königsberg","label_ko":"쾨니히스베르크 대학","start_year":1544,"origin":"seed","status":"accepted"}
+{"id":"inst:lse","type":"Institution","label":"London School of Economics","label_ko":"런던정경대","start_year":1895,"origin":"seed","status":"accepted"}
+{"id":"inst:lyceum","type":"Institution","label":"Lyceum","label_ko":"뤼케이온","description":"아리스토텔레스의 학원","start_year":-335,"origin":"seed","status":"accepted"}
+{"id":"inst:oxford","type":"Institution","label":"University of Oxford","label_ko":"옥스퍼드 대학","start_year":1096,"origin":"seed","status":"accepted"}
+{"id":"inst:university-of-paris","type":"Institution","label":"University of Paris","label_ko":"파리 대학","description":"스콜라 철학의 중심","start_year":1150,"origin":"seed","status":"accepted"}

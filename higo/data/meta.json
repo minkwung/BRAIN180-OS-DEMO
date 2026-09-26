@@ -1,0 +1,18 @@
+{
+  "schema_version": "0.1.0",
+  "ontology_version": "0.1.0",
+  "seed_version": "0.1.0-phase1",
+  "counters": {
+    "edge": 1592,
+    "evidence": 439,
+    "candidate": 0,
+    "document": 0
+  },
+  "versions": [
+    {
+      "version": "0.1.0",
+      "note": "HIGO Ontology v0.1 — Phase 1 seed (철학 30인 + 교차 분야)",
+      "created_at": 1790432386.5890777
+    }
+  ]
+}

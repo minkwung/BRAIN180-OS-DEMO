@@ -1,0 +1,15 @@
+{"id":"school:aristotelianism","type":"School","label":"Aristotelianism","label_ko":"아리스토텔레스주의","description":"형상·질료, 목적론, 덕 윤리의 전통","start_year":-335,"origin":"seed","status":"accepted"}
+{"id":"school:austrian-school","type":"School","label":"Austrian School","label_ko":"오스트리아학파","description":"주관적 가치·시장 과정·자생적 질서","start_year":1871,"origin":"seed","status":"accepted"}
+{"id":"school:british-empiricism","type":"School","label":"British Empiricism","label_ko":"영국 경험론","description":"경험을 지식의 원천으로 보는 입장","start_year":1689,"end_year":1776,"origin":"seed","status":"accepted"}
+{"id":"school:classical-economics","type":"School","label":"Classical Political Economy","label_ko":"고전파 정치경제학","description":"노동가치론과 시장의 자기조정","start_year":1776,"end_year":1870,"origin":"seed","status":"accepted"}
+{"id":"school:continental-rationalism","type":"School","label":"Continental Rationalism","label_ko":"대륙 합리론","description":"이성과 본유관념을 지식의 원천으로 보는 입장","start_year":1637,"end_year":1716,"origin":"seed","status":"accepted"}
+{"id":"school:critical-rationalism","type":"School","label":"Critical Rationalism","label_ko":"비판적 합리주의","description":"추측과 논박, 반증주의","start_year":1934,"origin":"seed","status":"accepted"}
+{"id":"school:epicureanism","type":"School","label":"Epicureanism","label_ko":"에피쿠로스학파","description":"원자론과 평정(ataraxia)의 윤리","start_year":-307,"origin":"seed","status":"accepted"}
+{"id":"school:german-idealism","type":"School","label":"German Idealism","label_ko":"독일 관념론","description":"칸트 이후 주체·정신·자유를 중심으로 한 체계 철학","start_year":1781,"end_year":1831,"origin":"seed","status":"accepted"}
+{"id":"school:keynesianism","type":"School","label":"Keynesian Economics","label_ko":"케인스 경제학","description":"유효수요와 거시 안정화 정책","start_year":1936,"origin":"seed","status":"accepted"}
+{"id":"school:marxism","type":"School","label":"Marxism","label_ko":"마르크스주의","description":"역사유물론과 자본주의 비판","start_year":1848,"origin":"seed","status":"accepted"}
+{"id":"school:phenomenology","type":"School","label":"Phenomenology","label_ko":"현상학","description":"의식에 나타나는 그대로의 사태를 기술","start_year":1900,"origin":"seed","status":"accepted"}
+{"id":"school:platonism","type":"School","label":"Platonism","label_ko":"플라톤주의","description":"이데아의 실재성을 중심으로 한 전통","start_year":-387,"origin":"seed","status":"accepted"}
+{"id":"school:scholasticism","type":"School","label":"Scholasticism","label_ko":"스콜라 철학","description":"신앙과 이성의 조화를 추구한 중세 대학의 철학","start_year":1100,"end_year":1500,"origin":"seed","status":"accepted"}
+{"id":"school:stoicism","type":"School","label":"Stoicism","label_ko":"스토아학파","description":"로고스·자연에 따른 삶·내면의 자유","start_year":-300,"origin":"seed","status":"accepted"}
+{"id":"school:utilitarianism","type":"School","label":"Utilitarianism","label_ko":"공리주의","description":"최대 다수의 최대 행복","start_year":1789,"origin":"seed","status":"accepted"}

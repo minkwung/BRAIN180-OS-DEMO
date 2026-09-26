@@ -1,0 +1,6 @@
+{"id":"school:analytic-philosophy","type":"Movement","label":"Analytic Philosophy","label_ko":"분석철학","description":"논리·언어 분석을 통한 철학","start_year":1900,"origin":"seed","status":"accepted"}
+{"id":"school:enlightenment","type":"Movement","label":"Enlightenment","label_ko":"계몽주의","description":"이성의 공적 사용과 자율","start_year":1680,"end_year":1800,"origin":"seed","status":"accepted"}
+{"id":"school:existentialism","type":"Movement","label":"Existentialism","label_ko":"실존주의","description":"실존·자유·책임·부조리를 중심으로 한 사조","start_year":1843,"origin":"seed","status":"accepted"}
+{"id":"school:liberalism","type":"Movement","label":"Liberalism","label_ko":"자유주의","description":"개인의 자유와 권리를 정치의 중심에 두는 사조","start_year":1689,"origin":"seed","status":"accepted"}
+{"id":"school:natural-law-tradition","type":"Movement","label":"Natural Law Tradition","label_ko":"자연법 전통","description":"이성으로 알 수 있는 보편적 도덕 질서","start_year":-300,"origin":"seed","status":"accepted"}
+{"id":"school:social-contract","type":"Movement","label":"Social Contract Tradition","label_ko":"사회계약론 전통","description":"정치적 정당성을 합의에서 찾는 전통","start_year":1651,"origin":"seed","status":"accepted"}

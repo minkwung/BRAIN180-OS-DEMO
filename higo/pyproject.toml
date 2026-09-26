@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "higo"
+version = "0.1.0"
+description = "Human Intellectual Genealogy Ontology — knowledge graph, evidence graph, reasoning and Graph RAG for intellectual history"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+llm = ["anthropic"]
+
+[project.scripts]
+higo = "higo.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["higo*"]
+
+[tool.setuptools.package-data]
+higo = ["web/*"]

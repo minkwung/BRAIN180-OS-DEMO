@@ -1,0 +1,18 @@
+{
+  "agent": {"model": "claude-opus-5", "prompt_version": "curator-v1", "note": "형식 예시 — URL 은 자리표시자이며, 실제 제안에서는 원문을 열람할 수 있는 URL 과 그 페이지의 인용문을 그대로 넣어야 한다"},
+  "operations": [
+    {"op": "add_entity",
+     "entity": {"id": "person:ferguson", "type": "Person", "label": "Adam Ferguson", "label_ko": "애덤 퍼거슨", "start_year": 1723, "end_year": 1816,
+                "description": "스코틀랜드 계몽주의 철학자"},
+     "evidence": [{"tier": 4, "url": "https://example.org/encyclopedia/ferguson", "quotation": "Adam Ferguson (1723–1816)", "citation": "백과사전 항목"},
+                  {"tier": 1, "url": "https://example.org/texts/ferguson-essay", "quotation": "An Essay on the History of Civil Society", "citation": "원전 표제지"}],
+     "rationale": "공백 분석: 분야 확장(정치·경제) — 자생적 질서 계보의 누락 인물"},
+    {"op": "add_edge",
+     "edge": {"source": "person:ferguson", "predicate": "influenced", "target": "person:hayek", "evidence_status": "direct"},
+     "evidence": [{"tier": 1, "url": "https://example.org/texts/hayek-results-of-human-action", "quotation": "the result of human action but not of human design", "citation": "Hayek (1967)"}],
+     "rationale": "하이에크가 퍼거슨의 표현을 직접 인용 — 인과 관계이므로 가설로 기록되어 사람 판단을 받는다"},
+    {"op": "add_evidence", "edge_id": "E01393",
+     "evidence": [{"tier": 1, "url": "https://example.org/texts/kant-prolegomena", "quotation": "interrupted my dogmatic slumber", "locator": "4:260", "citation": "Kant, Prolegomena"}],
+     "rationale": "공백 분석: 원전 인용문 확보"}
+  ]
+}

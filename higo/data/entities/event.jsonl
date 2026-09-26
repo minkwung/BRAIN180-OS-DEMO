@@ -1,0 +1,13 @@
+{"id":"event:american-independence","type":"Event","label":"American Declaration of Independence","label_ko":"미국 독립선언","start_year":1776,"end_year":1776,"origin":"seed","status":"accepted"}
+{"id":"event:english-civil-war","type":"Event","label":"English Civil War","label_ko":"영국 내전","start_year":1642,"end_year":1651,"origin":"seed","status":"accepted"}
+{"id":"event:french-revolution","type":"Event","label":"French Revolution","label_ko":"프랑스 혁명","start_year":1789,"end_year":1799,"origin":"seed","status":"accepted"}
+{"id":"event:glorious-revolution","type":"Event","label":"Glorious Revolution","label_ko":"명예혁명","start_year":1688,"end_year":1689,"origin":"seed","status":"accepted"}
+{"id":"event:great-depression","type":"Event","label":"Great Depression","label_ko":"대공황","start_year":1929,"end_year":1939,"origin":"seed","status":"accepted"}
+{"id":"event:industrial-revolution","type":"Event","label":"Industrial Revolution","label_ko":"산업혁명","start_year":1760,"end_year":1840,"origin":"seed","status":"accepted"}
+{"id":"event:reformation","type":"Event","label":"Protestant Reformation","label_ko":"종교개혁","start_year":1517,"end_year":1648,"origin":"seed","status":"accepted"}
+{"id":"event:revolutions-1848","type":"Event","label":"Revolutions of 1848","label_ko":"1848년 혁명","start_year":1848,"end_year":1849,"origin":"seed","status":"accepted"}
+{"id":"event:sack-of-rome","type":"Event","label":"Sack of Rome (410)","label_ko":"로마 약탈","description":"서고트족의 로마 약탈 — 『신국론』 집필의 계기","start_year":410,"end_year":410,"origin":"seed","status":"accepted"}
+{"id":"event:scientific-revolution","type":"Event","label":"Scientific Revolution","label_ko":"과학혁명","description":"코페르니쿠스에서 뉴턴까지","start_year":1543,"end_year":1687,"origin":"seed","status":"accepted"}
+{"id":"event:trial-of-socrates","type":"Event","label":"Trial and Death of Socrates","label_ko":"소크라테스의 재판과 죽음","start_year":-399,"end_year":-399,"origin":"seed","status":"accepted"}
+{"id":"event:world-war-1","type":"Event","label":"First World War","label_ko":"제1차 세계대전","start_year":1914,"end_year":1918,"origin":"seed","status":"accepted"}
+{"id":"event:world-war-2","type":"Event","label":"Second World War","label_ko":"제2차 세계대전","start_year":1939,"end_year":1945,"origin":"seed","status":"accepted"}

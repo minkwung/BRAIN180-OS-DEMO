@@ -1,0 +1,95 @@
+{"id":"work:apology","type":"Work","label":"Apology","label_ko":"소크라테스의 변론","description":"소크라테스 재판의 변론 (c. 399 BC 이후)","start_year":-399,"origin":"seed","status":"accepted","props":{"year":-399}}
+{"id":"work:autobiographical-notes","type":"Work","label":"Autobiographical Notes","label_ko":"자전적 노트","start_year":1949,"origin":"seed","status":"accepted","props":{"year":1949}}
+{"id":"work:being-and-nothingness","type":"Work","label":"Being and Nothingness","label_ko":"존재와 무","description":"부제: 현상학적 존재론 시론","start_year":1943,"origin":"seed","status":"accepted","props":{"year":1943}}
+{"id":"work:being-and-time","type":"Work","label":"Being and Time","label_ko":"존재와 시간","start_year":1927,"origin":"seed","status":"accepted","props":{"year":1927}}
+{"id":"work:beyond-good-and-evil","type":"Work","label":"Beyond Good and Evil","label_ko":"선악의 저편","start_year":1886,"origin":"seed","status":"accepted","props":{"year":1886}}
+{"id":"work:capital","type":"Work","label":"Capital, Vol. I","label_ko":"자본 1권","description":"제2판(1873) 후기 포함","start_year":1867,"origin":"seed","status":"accepted","props":{"year":1867}}
+{"id":"work:city-of-god","type":"Work","label":"City of God","label_ko":"신국론","description":"(413–426)","start_year":426,"origin":"seed","status":"accepted","props":{"year":426}}
+{"id":"work:communist-manifesto","type":"Work","label":"The Communist Manifesto","label_ko":"공산당 선언","start_year":1848,"origin":"seed","status":"accepted","props":{"year":1848}}
+{"id":"work:concluding-postscript","type":"Work","label":"Concluding Unscientific Postscript","label_ko":"철학적 단편에 대한 비학문적 후서","start_year":1846,"origin":"seed","status":"accepted","props":{"year":1846}}
+{"id":"work:confessions","type":"Work","label":"Confessions","label_ko":"고백록","description":"(397–400)","start_year":400,"origin":"seed","status":"accepted","props":{"year":400}}
+{"id":"work:conjectures-refutations","type":"Work","label":"Conjectures and Refutations","label_ko":"추측과 논박","start_year":1963,"origin":"seed","status":"accepted","props":{"year":1963}}
+{"id":"work:constitution-of-liberty","type":"Work","label":"The Constitution of Liberty","label_ko":"자유헌정론","start_year":1960,"origin":"seed","status":"accepted","props":{"year":1960}}
+{"id":"work:critique-hegel-right-intro","type":"Work","label":"A Contribution to the Critique of Hegel's Philosophy of Right: Introduction","label_ko":"헤겔 법철학 비판 서설","description":"Deutsch-Französische Jahrbücher, 1844","start_year":1844,"origin":"seed","status":"accepted","props":{"year":1844}}
+{"id":"work:critique-of-pure-reason","type":"Work","label":"Critique of Pure Reason","label_ko":"순수이성비판","description":"1787년 제2판(B)","start_year":1781,"origin":"seed","status":"accepted","props":{"year":1781}}
+{"id":"work:de-libero-arbitrio","type":"Work","label":"On Free Choice of the Will","label_ko":"자유의지론","description":"(388–395)","start_year":395,"origin":"seed","status":"accepted","props":{"year":395}}
+{"id":"work:declaration-of-independence","type":"Work","label":"Declaration of Independence","label_ko":"독립선언서","start_year":1776,"origin":"seed","status":"accepted","props":{"year":1776}}
+{"id":"work:discourse-inequality","type":"Work","label":"Discourse on Inequality","label_ko":"인간 불평등 기원론","start_year":1755,"origin":"seed","status":"accepted","props":{"year":1755}}
+{"id":"work:discourse-on-metaphysics","type":"Work","label":"Discourse on Metaphysics","label_ko":"형이상학 논고","start_year":1686,"origin":"seed","status":"accepted","props":{"year":1686}}
+{"id":"work:discourse-on-method","type":"Work","label":"Discourse on the Method","label_ko":"방법서설","start_year":1637,"origin":"seed","status":"accepted","props":{"year":1637}}
+{"id":"work:either-or","type":"Work","label":"Either/Or","label_ko":"이것이냐 저것이냐","start_year":1843,"origin":"seed","status":"accepted","props":{"year":1843}}
+{"id":"work:enchiridion","type":"Work","label":"Enchiridion","label_ko":"엥케이리디온","description":"아리아노스가 편찬한 에픽테토스의 가르침 (c.)","start_year":125,"origin":"seed","status":"accepted","props":{"year":125}}
+{"id":"work:enquiry-human-understanding","type":"Work","label":"An Enquiry Concerning Human Understanding","label_ko":"인간지성에 관한 탐구","start_year":1748,"origin":"seed","status":"accepted","props":{"year":1748}}
+{"id":"work:essay-human-understanding","type":"Work","label":"An Essay Concerning Human Understanding","label_ko":"인간지성론","start_year":1689,"origin":"seed","status":"accepted","props":{"year":1689}}
+{"id":"work:ethics-spinoza","type":"Work","label":"Ethics","label_ko":"에티카","start_year":1677,"origin":"seed","status":"accepted","props":{"year":1677}}
+{"id":"work:existentialism-humanism","type":"Work","label":"Existentialism Is a Humanism","label_ko":"실존주의는 휴머니즘이다","start_year":1946,"origin":"seed","status":"accepted","props":{"year":1946}}
+{"id":"work:faith-and-knowledge","type":"Work","label":"Faith and Knowledge","label_ko":"믿음과 지식","start_year":1802,"origin":"seed","status":"accepted","props":{"year":1802}}
+{"id":"work:fear-and-trembling","type":"Work","label":"Fear and Trembling","label_ko":"두려움과 떨림","start_year":1843,"origin":"seed","status":"accepted","props":{"year":1843}}
+{"id":"work:gay-science","type":"Work","label":"The Gay Science","label_ko":"즐거운 학문","start_year":1882,"origin":"seed","status":"accepted","props":{"year":1882}}
+{"id":"work:genealogy-of-morals","type":"Work","label":"On the Genealogy of Morals","label_ko":"도덕의 계보","start_year":1887,"origin":"seed","status":"accepted","props":{"year":1887}}
+{"id":"work:general-theory","type":"Work","label":"The General Theory of Employment, Interest and Money","label_ko":"고용·이자 및 화폐의 일반이론","start_year":1936,"origin":"seed","status":"accepted","props":{"year":1936}}
+{"id":"work:german-ideology","type":"Work","label":"The German Ideology","label_ko":"독일 이데올로기","description":"1846년 집필, 1932년 출간","start_year":1846,"origin":"seed","status":"accepted","props":{"year":1846}}
+{"id":"work:groundwork","type":"Work","label":"Groundwork of the Metaphysics of Morals","label_ko":"도덕형이상학 정초","start_year":1785,"origin":"seed","status":"accepted","props":{"year":1785}}
+{"id":"work:hayek-review-keynes","type":"Work","label":"Reflections on the Pure Theory of Money of Mr. J. M. Keynes","label_ko":"케인스의 화폐 순수이론에 대한 성찰","description":"Economica, 1931","start_year":1931,"origin":"seed","status":"accepted","props":{"year":1931}}
+{"id":"work:ideas-i","type":"Work","label":"Ideas I","label_ko":"이념들 I","start_year":1913,"origin":"seed","status":"accepted","props":{"year":1913}}
+{"id":"work:kant-remarks","type":"Work","label":"Remarks in the Observations on the Feeling of the Beautiful and Sublime","label_ko":"『미와 숭고의 감정에 관한 고찰』 메모","description":"1764–65년 자필 메모","start_year":1765,"origin":"seed","status":"accepted","props":{"year":1765}}
+{"id":"work:la-geometrie","type":"Work","label":"La Géométrie","label_ko":"기하학","description":"『방법서설』의 부록","start_year":1637,"origin":"seed","status":"accepted","props":{"year":1637}}
+{"id":"work:laws-ecclesiastical-polity","type":"Work","label":"Of the Laws of Ecclesiastical Polity","label_ko":"교회 정체의 법","start_year":1594,"origin":"seed","status":"accepted","props":{"year":1594}}
+{"id":"work:lectures-philosophy-of-history","type":"Work","label":"Lectures on the Philosophy of History","label_ko":"역사철학 강의","description":"사후 출간","start_year":1837,"origin":"seed","status":"accepted","props":{"year":1837}}
+{"id":"work:leibniz-clarke","type":"Work","label":"Leibniz–Clarke Correspondence","label_ko":"라이프니츠–클라크 서한","description":"뉴턴 측 클라크와의 공간·시간 논쟁","start_year":1716,"origin":"seed","status":"accepted","props":{"year":1716}}
+{"id":"work:letter-to-henry-lee","type":"Work","label":"Letter to Henry Lee (8 May 1825)","label_ko":"헨리 리에게 보낸 편지","description":"독립선언서의 사상적 원천을 회고한 편지","start_year":1825,"origin":"seed","status":"accepted","props":{"year":1825}}
+{"id":"work:letter-to-menoeceus","type":"Work","label":"Letter to Menoeceus","label_ko":"메노이케우스에게 보내는 편지","description":"(c.)","start_year":-300,"origin":"seed","status":"accepted","props":{"year":-300}}
+{"id":"work:leviathan","type":"Work","label":"Leviathan","label_ko":"리바이어던","start_year":1651,"origin":"seed","status":"accepted","props":{"year":1651}}
+{"id":"work:logic-or-psychology","type":"Work","label":"Logic of Discovery or Psychology of Research?","label_ko":"발견의 논리인가 탐구의 심리학인가?","description":"Lakatos & Musgrave (eds.), Criticism and the Growth of Knowledge","start_year":1970,"origin":"seed","status":"accepted","props":{"year":1970}}
+{"id":"work:logic-scientific-discovery","type":"Work","label":"The Logic of Scientific Discovery","label_ko":"과학적 발견의 논리","description":"독일어판 1934, 영어판 1959","start_year":1934,"origin":"seed","status":"accepted","props":{"year":1934}}
+{"id":"work:logical-investigations","type":"Work","label":"Logical Investigations","label_ko":"논리연구","start_year":1900,"origin":"seed","status":"accepted","props":{"year":1900}}
+{"id":"work:manuscripts-1844","type":"Work","label":"Economic and Philosophic Manuscripts of 1844","label_ko":"1844년 경제학·철학 수고","description":"1932년 출간","start_year":1844,"origin":"seed","status":"accepted","props":{"year":1844}}
+{"id":"work:marx-dissertation","type":"Work","label":"The Difference Between the Democritean and Epicurean Philosophy of Nature","label_ko":"데모크리토스와 에피쿠로스 자연철학의 차이","description":"박사학위 논문","start_year":1841,"origin":"seed","status":"accepted","props":{"year":1841}}
+{"id":"work:meditations","type":"Work","label":"Meditations on First Philosophy","label_ko":"성찰","description":"반론과 답변(Objections and Replies) 포함","start_year":1641,"origin":"seed","status":"accepted","props":{"year":1641}}
+{"id":"work:meno","type":"Work","label":"Meno","label_ko":"메논","description":"덕의 교육 가능성과 상기설 (c.)","start_year":-385,"origin":"seed","status":"accepted","props":{"year":-385}}
+{"id":"work:metaphysics","type":"Work","label":"Metaphysics","label_ko":"형이상학","description":"실체론·이데아론 비판 (c.)","start_year":-340,"origin":"seed","status":"accepted","props":{"year":-340}}
+{"id":"work:monadology","type":"Work","label":"Monadology","label_ko":"모나드론","start_year":1714,"origin":"seed","status":"accepted","props":{"year":1714}}
+{"id":"work:myth-of-sisyphus","type":"Work","label":"The Myth of Sisyphus","label_ko":"시지프 신화","start_year":1942,"origin":"seed","status":"accepted","props":{"year":1942}}
+{"id":"work:new-essays","type":"Work","label":"New Essays on Human Understanding","label_ko":"신인간지성론","description":"1704년 완성, 1765년 출간","start_year":1704,"origin":"seed","status":"accepted","props":{"year":1704}}
+{"id":"work:nicomachean-ethics","type":"Work","label":"Nicomachean Ethics","label_ko":"니코마코스 윤리학","description":"행복·덕·정의로운 교환 (c.)","start_year":-340,"origin":"seed","status":"accepted","props":{"year":-340}}
+{"id":"work:nietzsche-lectures","type":"Work","label":"Nietzsche (lectures 1936–1946)","label_ko":"니체 강의","description":"1961년 출간","start_year":1961,"origin":"seed","status":"accepted","props":{"year":1961}}
+{"id":"work:on-denoting","type":"Work","label":"On Denoting","label_ko":"지시에 관하여","start_year":1905,"origin":"seed","status":"accepted","props":{"year":1905}}
+{"id":"work:on-liberty","type":"Work","label":"On Liberty","label_ko":"자유론","start_year":1859,"origin":"seed","status":"accepted","props":{"year":1859}}
+{"id":"work:open-society","type":"Work","label":"The Open Society and Its Enemies","label_ko":"열린사회와 그 적들","start_year":1945,"origin":"seed","status":"accepted","props":{"year":1945}}
+{"id":"work:phenomenology-of-spirit","type":"Work","label":"Phenomenology of Spirit","label_ko":"정신현상학","start_year":1807,"origin":"seed","status":"accepted","props":{"year":1807}}
+{"id":"work:philosophical-investigations","type":"Work","label":"Philosophical Investigations","label_ko":"철학적 탐구","description":"사후 출간","start_year":1953,"origin":"seed","status":"accepted","props":{"year":1953}}
+{"id":"work:philosophy-of-right","type":"Work","label":"Elements of the Philosophy of Right","label_ko":"법철학","start_year":1820,"origin":"seed","status":"accepted","props":{"year":1820}}
+{"id":"work:physics","type":"Work","label":"Physics","label_ko":"자연학","description":"4원인설과 운동론 (c.)","start_year":-350,"origin":"seed","status":"accepted","props":{"year":-350}}
+{"id":"work:politics","type":"Work","label":"Politics","label_ko":"정치학","description":"폴리스·사유재산·플라톤 비판 (c.)","start_year":-340,"origin":"seed","status":"accepted","props":{"year":-340}}
+{"id":"work:principia","type":"Work","label":"Philosophiæ Naturalis Principia Mathematica","label_ko":"프린키피아","description":"1713년 제2판에 일반 주해 추가","start_year":1687,"origin":"seed","status":"accepted","props":{"year":1687}}
+{"id":"work:principia-mathematica","type":"Work","label":"Principia Mathematica","label_ko":"수학 원리","description":"화이트헤드와 공저 (1910–1913)","start_year":1910,"origin":"seed","status":"accepted","props":{"year":1910}}
+{"id":"work:principles-cartesian","type":"Work","label":"Principles of Cartesian Philosophy","label_ko":"데카르트 철학의 원리","start_year":1663,"origin":"seed","status":"accepted","props":{"year":1663}}
+{"id":"work:principles-political-economy","type":"Work","label":"On the Principles of Political Economy and Taxation","label_ko":"정치경제학과 과세의 원리","start_year":1817,"origin":"seed","status":"accepted","props":{"year":1817}}
+{"id":"work:prolegomena","type":"Work","label":"Prolegomena to Any Future Metaphysics","label_ko":"형이상학 서설","start_year":1783,"origin":"seed","status":"accepted","props":{"year":1783}}
+{"id":"work:republic","type":"Work","label":"Republic","label_ko":"국가","description":"정의·이상국가·철인정치·이데아 (c.)","start_year":-375,"origin":"seed","status":"accepted","props":{"year":-375}}
+{"id":"work:road-to-serfdom","type":"Work","label":"The Road to Serfdom","label_ko":"노예의 길","start_year":1944,"origin":"seed","status":"accepted","props":{"year":1944}}
+{"id":"work:social-contract","type":"Work","label":"The Social Contract","label_ko":"사회계약론","start_year":1762,"origin":"seed","status":"accepted","props":{"year":1762}}
+{"id":"work:special-relativity","type":"Work","label":"On the Electrodynamics of Moving Bodies","label_ko":"움직이는 물체의 전기역학에 관하여","description":"특수상대성이론 논문","start_year":1905,"origin":"seed","status":"accepted","props":{"year":1905}}
+{"id":"work:structure-scientific-revolutions","type":"Work","label":"The Structure of Scientific Revolutions","label_ko":"과학혁명의 구조","start_year":1962,"origin":"seed","status":"accepted","props":{"year":1962}}
+{"id":"work:summa-theologiae","type":"Work","label":"Summa Theologiae","label_ko":"신학대전","description":"(1265–1274)","start_year":1270,"origin":"seed","status":"accepted","props":{"year":1270}}
+{"id":"work:symposium","type":"Work","label":"Symposium","label_ko":"향연","description":"에로스와 아름다움의 이데아 (c.)","start_year":-385,"origin":"seed","status":"accepted","props":{"year":-385}}
+{"id":"work:the-prince","type":"Work","label":"The Prince","label_ko":"군주론","description":"1513년 집필, 1532년 출간","start_year":1513,"origin":"seed","status":"accepted","props":{"year":1513}}
+{"id":"work:the-rebel","type":"Work","label":"The Rebel","label_ko":"반항하는 인간","start_year":1951,"origin":"seed","status":"accepted","props":{"year":1951}}
+{"id":"work:theory-moral-sentiments","type":"Work","label":"The Theory of Moral Sentiments","label_ko":"도덕감정론","start_year":1759,"origin":"seed","status":"accepted","props":{"year":1759}}
+{"id":"work:theory-of-justice","type":"Work","label":"A Theory of Justice","label_ko":"정의론","start_year":1971,"origin":"seed","status":"accepted","props":{"year":1971}}
+{"id":"work:theses-on-feuerbach","type":"Work","label":"Theses on Feuerbach","label_ko":"포이어바흐에 관한 테제","start_year":1845,"origin":"seed","status":"accepted","props":{"year":1845}}
+{"id":"work:timaeus","type":"Work","label":"Timaeus","label_ko":"티마이오스","description":"우주론 (c.)","start_year":-360,"origin":"seed","status":"accepted","props":{"year":-360}}
+{"id":"work:tractatus","type":"Work","label":"Tractatus Logico-Philosophicus","label_ko":"논리철학논고","start_year":1921,"origin":"seed","status":"accepted","props":{"year":1921}}
+{"id":"work:treatise-human-nature","type":"Work","label":"A Treatise of Human Nature","label_ko":"인간 본성론","description":"부제: 도덕적 주제에 실험적 추론 방법을 도입하려는 시도","start_year":1739,"origin":"seed","status":"accepted","props":{"year":1739}}
+{"id":"work:ttp","type":"Work","label":"Theological-Political Treatise","label_ko":"신학정치론","start_year":1670,"origin":"seed","status":"accepted","props":{"year":1670}}
+{"id":"work:twilight-of-idols","type":"Work","label":"Twilight of the Idols","label_ko":"우상의 황혼","start_year":1889,"origin":"seed","status":"accepted","props":{"year":1889}}
+{"id":"work:two-concepts-of-liberty","type":"Work","label":"Two Concepts of Liberty","label_ko":"자유의 두 개념","description":"옥스퍼드 취임 강연","start_year":1958,"origin":"seed","status":"accepted","props":{"year":1958}}
+{"id":"work:two-treatises","type":"Work","label":"Two Treatises of Government","label_ko":"통치론","start_year":1689,"origin":"seed","status":"accepted","props":{"year":1689}}
+{"id":"work:universal-natural-history","type":"Work","label":"Universal Natural History and Theory of the Heavens","label_ko":"일반 자연사와 천체 이론","start_year":1755,"origin":"seed","status":"accepted","props":{"year":1755}}
+{"id":"work:untimely-schopenhauer","type":"Work","label":"Schopenhauer as Educator","label_ko":"교육자로서의 쇼펜하우어","description":"『반시대적 고찰』 제3편","start_year":1874,"origin":"seed","status":"accepted","props":{"year":1874}}
+{"id":"work:use-of-knowledge","type":"Work","label":"The Use of Knowledge in Society","label_ko":"사회에서 지식의 활용","description":"American Economic Review, 1945","start_year":1945,"origin":"seed","status":"accepted","props":{"year":1945}}
+{"id":"work:utilitarianism","type":"Work","label":"Utilitarianism","label_ko":"공리주의","start_year":1863,"origin":"seed","status":"accepted","props":{"year":1863}}
+{"id":"work:wealth-of-nations","type":"Work","label":"The Wealth of Nations","label_ko":"국부론","start_year":1776,"origin":"seed","status":"accepted","props":{"year":1776}}
+{"id":"work:what-is-enlightenment","type":"Work","label":"An Answer to the Question: What is Enlightenment?","label_ko":"계몽이란 무엇인가","start_year":1784,"origin":"seed","status":"accepted","props":{"year":1784}}
+{"id":"work:world-as-will","type":"Work","label":"The World as Will and Representation","label_ko":"의지와 표상으로서의 세계","description":"1844년 제2판","start_year":1818,"origin":"seed","status":"accepted","props":{"year":1818}}
+{"id":"work:zarathustra","type":"Work","label":"Thus Spoke Zarathustra","label_ko":"차라투스트라는 이렇게 말했다","start_year":1883,"origin":"seed","status":"accepted","props":{"year":1883}}
