@@ -27,6 +27,13 @@ INTENTS = [
 ]
 
 
+KIND_SHORT = {
+    "DIRECT_INFLUENCE": "직접 영향", "INDIRECT_INFLUENCE": "간접 영향", "CONCEPTUAL_CONTINUITY": "개념적 연속성",
+    "CRITICAL_ENGAGEMENT": "비판적 관여", "SHARED_PROBLEM": "공통 문제의식", "STRUCTURAL_SIMILARITY": "구조적 유사성",
+    "CONCEPTUAL_OPPOSITION": "개념적 대립", "HISTORICAL_CO_OCCURRENCE": "역사적 공존", "REVERSE": "역방향 흐름",
+}
+
+
 class GraphRAG:
     def __init__(self, graph: GraphIndex, vectors: VectorIndex, reasoner: Reasoner, extractor,
                  llm: LLMClient | None = None):
@@ -333,7 +340,7 @@ class GraphRAG:
         if ctx["evidence"]:
             out.append("\n### 근거")
             for e in ctx["evidence"][:8]:
-                out.append(f"- {e['claim']} — Tier {e['tier']} {e['citation']} {e['locator']} ({e['evidence_id']}, 확신도 {e['confidence']:.2f})")
+                out.append(f"- {e['claim']} — {e['tier']}등급 {e['citation']} {e['locator']} ({e['evidence_id']}, 확신도 {e['confidence']:.2f})")
         out.append("\n_이 답변은 LLM 없이 그래프 경로와 증거만으로 구성되었습니다._")
         return "\n".join(out)
 
@@ -347,5 +354,5 @@ class GraphRAG:
                 if c.get("steps"):
                     path = " → ".join([c["steps"][0]["from_label"]] +
                                       [f"[{s['predicate_ko']} {s['edge_id']}] {s['to_label']}" for s in c["steps"]])
-                    out.append(f"  - {kind}: {path}")
+                    out.append(f"  - {KIND_SHORT.get(kind, kind)}: {path}")
         return out

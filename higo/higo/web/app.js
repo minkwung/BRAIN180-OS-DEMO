@@ -28,12 +28,30 @@ function toast(msg) {
   toast._t = setTimeout(() => (t.hidden = true), 3200);
 }
 
+/* 화면 표시용 한글 사전 */
+const KO = {
+  type: { Person: "인물", Work: "저작", Concept: "개념", Proposition: "명제", Argument: "논증", School: "학파", Movement: "사조", Domain: "분야", Era: "시대", Institution: "기관", Event: "사건", Source: "출처", Interpretation: "해석" },
+  status: { hypothesis: "가설", proposed: "제안", accepted: "승인", contested: "이의 제기", revised: "수정", rejected: "기각" },
+  evstatus: { direct: "직접", indirect: "간접", disputed: "논쟁 중", inferred: "추론" },
+  origin: { seed: "초기 데이터", human: "사람", extraction: "규칙 추출", ai: "AI", import: "가져오기" },
+  cat: { authorship: "귀속", content: "내용", influence: "영향", succession: "계승·변형", critique: "비판", conceptual: "개념 관계", similarity: "유사(비인과)", opposition: "대립", historical: "역사·맥락", evidence: "증거", taxonomy: "분류", argument: "논증" },
+  kind: { DIRECT_INFLUENCE: "직접 영향", INDIRECT_INFLUENCE: "간접 영향", CONCEPTUAL_CONTINUITY: "개념적 연속성", CRITICAL_ENGAGEMENT: "비판적 관여", SHARED_PROBLEM: "공통 문제의식", STRUCTURAL_SIMILARITY: "구조적 유사성", CONCEPTUAL_OPPOSITION: "개념적 대립", HISTORICAL_CO_OCCURRENCE: "역사적 공존", REVERSE: "역방향 흐름" },
+  action: { create: "생성", update: "수정", delete: "삭제", confidence: "확신도 변경", review: "검토", approved: "채택", rejected: "버림" },
+  cand: { edge: "관계", proposition: "명제", entity: "개념·엔티티" },
+  step: { question: "질문", ontology_search: "온톨로지 검색", intent: "질문 유형", temporal_expansion: "시간 축 확장", proposition_alignment: "명제 정렬", path_classification: "경로 분류", chain_analysis: "연쇄 분석", semantic_retrieval: "의미 검색", evidence: "증거 수집", synthesis: "답변 합성", llm_error: "LLM 오류" },
+  intent: { genealogy: "개념 계보", compare: "비교·논쟁", connection: "연결 분석", chain: "연속성과 단절", contradiction: "대립 구조", cross_domain: "학제 연결", profile: "사상가 프로필", search: "의미 검색" },
+  method: { "rule:cue+2persons": "규칙: 단서어+인물 2명", "rule:cue+person+concept": "규칙: 단서어+인물+개념", "rule:claim+concept": "규칙: 주장문+개념", "rule:quoted-term": "규칙: 따옴표 용어", llm: "LLM" },
+};
+const ko = (dict, v) => (KO[dict] && KO[dict][v]) || v;
+const typeKo = (t) => ko("type", t);
+const relKo = (p) => STATE.relKo[p] || p;
+const actorKo = (a) => ({ seed: "초기 데이터", system: "시스템", "ai:discovery": "AI 발견 엔진", human: "사람", import: "가져오기" }[a] || a);
 const label = (id) => {
   const e = STATE.byId.get(id);
   return e ? e.label_ko || e.label : id;
 };
 const yearStr = (y) => (y == null ? "?" : y < 0 ? `BC ${-y}` : String(y));
-const pill = (s) => `<span class="pill ${esc(s)}">${esc(s)}</span>`;
+const pill = (s) => `<span class="pill ${esc(s)}">${esc(ko("status", s))}</span>`;
 const conf = (c) => `<span class="conf" title="확신도 ${(+c).toFixed(2)}"><i style="width:${Math.round(c * 100)}%"></i></span> <span class="small muted">${(+c).toFixed(2)}</span>`;
 const nodeLink = (id, text) => `<button class="link" data-node="${esc(id)}">${esc(text ?? label(id))}</button>`;
 const edgeLink = (id) => `<button class="link small" data-edge="${esc(id)}">${esc(id)}</button>`;
@@ -49,6 +67,21 @@ function resolveInput(v) {
   const low = v.toLowerCase();
   const hit = STATE.entities.find((e) => (e.label_ko || "").toLowerCase() === low || e.label.toLowerCase() === low || (e.aliases || []).some((a) => a.toLowerCase() === low));
   return hit ? hit.id : v;
+}
+
+function modeKo(m) {
+  if (!m) return "";
+  return m === "template" ? "템플릿 (LLM 없이 그래프 경로·증거만 사용)" : m.startsWith("llm:") ? `LLM (${m.slice(4)})` : m;
+}
+function kindText(s) {
+  return String(s).replace(/\b([A-Z_]{6,})\b/g, (x) => ko("kind", x)).replace(/\((\w+), (name|vector)\)/g, (_, t, v) => `(${typeKo(t)}, ${v === "name" ? "이름 일치" : "의미 유사"})`);
+}
+function historyText(obj) {
+  return Object.entries(obj).slice(0, 4).map(([k, v]) => {
+    const key = { epistemic_status: "상태", confidence: "확신도", predicate: "관계", source: "출발", target: "도착", origin: "구분" }[k] || k;
+    const val = k === "epistemic_status" ? ko("status", v) : k === "confidence" ? (+v).toFixed(2) : k === "origin" ? ko("origin", v) : k === "predicate" ? relKo(v) : v;
+    return `${key}: ${typeof val === "object" ? JSON.stringify(val) : val}`;
+  }).join(", ");
 }
 
 /* ---------------------------------------------------------------- markdown */
@@ -100,7 +133,7 @@ async function boot() {
 function setEntities(entities) {
   STATE.entities = entities;
   STATE.byId = new Map(entities.map((e) => [e.id, e]));
-  const opt = (e) => `<option value="${esc(e.id)}">${esc(e.label_ko || e.label)} · ${esc(e.type)}</option>`;
+  const opt = (e) => `<option value="${esc(e.id)}">${esc(e.label_ko || e.label)} · ${esc(typeKo(e.type))}</option>`;
   $("#dl-nodes").innerHTML = entities.filter((e) => !["Era", "Domain", "Source", "Proposition"].includes(e.type)).map(opt).join("");
   $("#dl-persons").innerHTML = entities.filter((e) => e.type === "Person").map(opt).join("");
   $("#dl-concepts").innerHTML = entities.filter((e) => e.type === "Concept").map(opt).join("");
@@ -162,7 +195,7 @@ function initSearch() {
     t = setTimeout(async () => {
       const hits = await api("/api/search?q=" + encodeURIComponent(q));
       box.innerHTML = hits.length
-        ? hits.map((h) => `<button type="button" data-node="${esc(h.id)}"><span class="dot" style="background:${typeColor(h.type)}"></span>${esc(h.label)} <span class="small muted">${esc(h.type)} · ${yearStr(h.year)}</span></button>`).join("")
+        ? hits.map((h) => `<button type="button" data-node="${esc(h.id)}"><span class="dot" style="background:${typeColor(h.type)}"></span>${esc(h.label)} <span class="small muted">${esc(typeKo(h.type))} · ${yearStr(h.year)}</span></button>`).join("")
         : '<p class="muted small" style="padding:8px">결과 없음</p>';
       box.hidden = false;
     }, 180);
@@ -391,7 +424,7 @@ async function showNodeDetail(id) {
   if (n.type === "Concept") actions.push(`<button class="small" data-act="gen">계보</button>`);
   if (n.type === "Person") actions.push(`<button class="small" data-act="dna">사상 DNA</button>`);
   box.innerHTML = `
-    <div class="row"><span class="dot" style="background:${typeColor(n.type)}"></span><span class="small muted">${esc(n.type)} · ${esc(n.id)}</span></div>
+    <div class="row"><span class="dot" style="background:${typeColor(n.type)}"></span><span class="small muted">${esc(typeKo(n.type))} · ${esc(n.id)}</span></div>
     <h2 style="margin-top:6px">${esc(n.label_ko || n.label)}</h2>
     ${n.label_ko && n.label !== n.label_ko ? `<p class="muted small">${esc(n.label)}</p>` : ""}
     ${p.statement ? `<p>${esc(p.statement)}</p>${p.statement_en ? `<p class="small muted">${esc(p.statement_en)}</p>` : ""}` : ""}
@@ -404,7 +437,7 @@ async function showNodeDetail(id) {
     </dl>
     <div class="row" style="margin-top:8px">${actions.join("")}</div>
     ${groups.map(([k, rels]) => `
-      <div class="rel-group"><h3>${esc(rels[0].predicate_ko)} <span class="muted">(${esc(k)})</span> · ${rels.length}</h3>
+      <div class="rel-group"><h3>${esc(rels[0].predicate_ko)}${k.endsWith("(역방향)") ? ' <span class="muted">(받은 관계)</span>' : ""} · ${rels.length}</h3>
         ${rels.slice(0, 40).map((r) => `<div class="rel">${r.outgoing ? "→" : "←"} ${nodeLink(r.other, r.other_label)} ${r.evidence_count ? `<span class="small muted" style="white-space:nowrap">증거 ${r.evidence_count}</span>` : ""} ${r.epistemic_status !== "accepted" ? pill(r.epistemic_status) : ""} <span style="margin-left:auto">${edgeLink(r.edge_id)}</span></div>`).join("")}
       </div>`).join("")}`;
   box.querySelector('[data-act="gen"]')?.addEventListener("click", () => { $("#gen-concept").value = id; showTab("genealogy"); runGenealogy(); });
@@ -415,11 +448,11 @@ function evidenceHTML(list) {
   if (!list || !list.length) return '<p class="muted small">증거 없음</p>';
   const tiers = Object.fromEntries((STATE.schema?.evidence_tiers || []).map((t) => [t.tier, t.label_ko]));
   return list.map((e) => `<div class="evidence t${e.tier} ${e.stance}">
-    <div><b>Tier ${e.tier}</b> <span class="small muted">${esc(tiers[e.tier] || "")}</span> ${e.stance === "contradicts" ? '<span class="pill rejected" style="text-decoration:none">반대 증거</span>' : ""}</div>
+    <div><b>${e.tier}등급</b> <span class="small muted">${esc(tiers[e.tier] || "")}</span> ${e.stance === "contradicts" ? '<span class="pill rejected" style="text-decoration:none">반대 증거</span>' : ""}</div>
     <div>${e.source_id ? nodeLink(e.source_id, e.source_label || label(e.source_id)) : esc(e.citation)} ${e.locator ? `<span class="muted">· ${esc(e.locator)}</span>` : ""}</div>
     ${e.quotation ? `<div class="small">“${esc(e.quotation)}”</div>` : ""}
     ${e.interpretation ? `<div class="small muted">${esc(e.interpretation)}</div>` : ""}
-    <div class="small muted">${esc(e.id)} · ${esc(e.added_by)}</div></div>`).join("");
+    <div class="small muted">${esc(e.id)} · ${esc(actorKo(e.added_by))}</div></div>`).join("");
 }
 
 async function showEdgeDetail(id) {
@@ -428,20 +461,20 @@ async function showEdgeDetail(id) {
   const e = await api("/api/edges/" + encodeURIComponent(id));
   const errs = e.validation.issues;
   box.innerHTML = `
-    <p class="small muted">관계 ${esc(e.id)} · ${esc(e.category)} · v${e.version}</p>
+    <p class="small muted">관계 ${esc(e.id)} · ${esc(ko("cat", e.category))} · 버전 ${e.version}</p>
     <h2>${nodeLink(e.source, e.source_label)} <span class="muted">—${esc(e.predicate_ko)}→</span> ${nodeLink(e.target, e.target_label)}</h2>
     <dl class="kv">
       <dt>인식 상태</dt><dd>${pill(e.epistemic_status)}</dd>
-      <dt>증거 성격</dt><dd>${esc(e.evidence_status)}</dd>
+      <dt>증거 성격</dt><dd>${esc(ko("evstatus", e.evidence_status))}</dd>
       <dt>확신도</dt><dd>${conf(e.confidence)}</dd>
-      <dt>기원</dt><dd>${esc(e.origin)}</dd>
+      <dt>출처 구분</dt><dd>${esc(ko("origin", e.origin))}</dd>
       ${e.note ? `<dt>메모</dt><dd>${esc(e.note)}</dd>` : ""}
     </dl>
-    ${errs.length ? `<div class="small" style="margin-top:8px">${errs.map((i) => `<div style="color:var(${i.level === "error" ? "--bad" : "--warn"})">${esc(i.code)}: ${esc(i.message)}</div>`).join("")}</div>` : ""}
+    ${errs.length ? `<div class="small" style="margin-top:8px">${errs.map((i) => `<div style="color:var(${i.level === "error" ? "--bad" : "--warn"})">${i.level === "error" ? "오류" : "경고"}: ${esc(i.message)}</div>`).join("")}</div>` : ""}
     <h3 style="margin-top:14px">증거 번들</h3>${evidenceHTML(e.evidence)}
     ${reviewControls(e)}
     <h3 style="margin-top:14px">변경 이력</h3>
-    <div class="small">${e.history.map((h) => `<div class="rel"><span class="muted">${new Date(h.ts * 1000).toLocaleString()}</span> <b>${esc(h.action)}</b> ${esc(h.actor)} ${h.after ? `<span class="muted">${esc(JSON.stringify(h.after)).slice(0, 120)}</span>` : ""} ${h.reason ? "— " + esc(h.reason) : ""}</div>`).join("") || '<span class="muted">없음</span>'}</div>`;
+    <div class="small">${e.history.map((h) => `<div class="rel"><span class="muted">${new Date(h.ts * 1000).toLocaleString()}</span> <b style="white-space:nowrap">${esc(ko("action", h.action))}</b> ${esc(actorKo(h.actor))} ${h.after ? `<span class="muted">${esc(historyText(h.after))}</span>` : ""} ${h.reason ? "— " + esc(h.reason) : ""}</div>`).join("") || '<span class="muted">없음</span>'}</div>`;
   bindReviewControls(box, e.id, () => showEdgeDetail(e.id));
 }
 
@@ -455,7 +488,7 @@ function reviewControls(e) {
     <div class="row" style="margin-top:6px">${acts.map(([, a, t, c]) => `<button class="small ${c}" data-review="${a}">${t}</button>`).join("")}</div>
     <details style="margin-top:8px"><summary class="small">증거 추가</summary>
       <div class="form-grid">
-        <select class="ev-tier">${[1, 2, 3, 4, 5, 6].map((t) => `<option value="${t}">Tier ${t}</option>`).join("")}</select>
+        <select class="ev-tier">${[1, 2, 3, 4, 5, 6].map((t) => `<option value="${t}">${t}등급</option>`).join("")}</select>
         <select class="ev-stance"><option value="supports">지지</option><option value="contradicts">반대</option></select>
         <input class="ev-source" list="dl-works" placeholder="원전(work:…) 선택">
         <input class="ev-citation" placeholder="또는 서지 표기">
@@ -516,9 +549,9 @@ function initAsk() {
     try {
       const r = await api("/api/ask", { body: { question: q, use_llm: $("#ask-llm").checked, include_hypotheses: $("#ask-hyp").checked } });
       $("#ask-answer").classList.remove("muted");
-      $("#ask-answer").innerHTML = md(r.answer) + `<p class="small muted">합성: ${esc(r.mode)}${r.unsupported_citations.length ? ` · 컨텍스트에 없는 인용 ${r.unsupported_citations.map(esc).join(", ")}` : ""}</p>`;
-      $("#ask-trace").innerHTML = r.trace.map((t) => `<li><b>${esc(t.step)}</b> ${esc(Array.isArray(t.detail) ? t.detail.join(" · ") : t.detail)}</li>`).join("");
-      $("#ask-evidence").innerHTML = r.evidence.length ? `<div class="table-wrap"><table><thead><tr><th>주장</th><th>Tier</th><th>출처</th><th>확신도</th></tr></thead><tbody>${r.evidence.map((e) => `<tr><td>${esc(e.claim)} ${edgeLink(e.edge_id)}</td><td>${e.tier}</td><td>${esc(e.citation)} <span class="muted">${esc(e.locator)}</span></td><td>${conf(e.confidence)}</td></tr>`).join("")}</tbody></table></div>` : '<p class="muted small">이 질문에 연결된 증거 관계가 없습니다.</p>';
+      $("#ask-answer").innerHTML = md(r.answer) + `<p class="small muted">합성: ${esc(modeKo(r.mode))}${r.unsupported_citations.length ? ` · 컨텍스트에 없는 인용 ${r.unsupported_citations.map(esc).join(", ")}` : ""}</p>`;
+      $("#ask-trace").innerHTML = r.trace.map((t) => `<li><b>${esc(ko("step", t.step))}</b> ${esc(t.step === "intent" ? ko("intent", t.detail) : t.step === "synthesis" ? modeKo(t.detail) : Array.isArray(t.detail) ? t.detail.map(kindText).join(" · ") : t.detail)}</li>`).join("");
+      $("#ask-evidence").innerHTML = r.evidence.length ? `<div class="table-wrap"><table><thead><tr><th>주장</th><th>등급</th><th>출처</th><th>확신도</th></tr></thead><tbody>${r.evidence.map((e) => `<tr><td>${esc(e.claim)} ${edgeLink(e.edge_id)}</td><td>${e.tier}</td><td>${esc(e.citation)} <span class="muted">${esc(e.locator)}</span></td><td>${conf(e.confidence)}</td></tr>`).join("")}</tbody></table></div>` : '<p class="muted small">이 질문에 연결된 증거 관계가 없습니다.</p>';
     } catch (err) { $("#ask-answer").innerHTML = `<p class="muted">${esc(err.message)}</p>`; }
   });
 }
@@ -550,7 +583,7 @@ function pathHTML(c) {
 }
 function connectionHTML(r) {
   return `<div class="panel"><h2>${nodeLink(r.from, r.from_label)} → ${nodeLink(r.to, r.to_label)}</h2><p class="verdict">${esc(r.verdict)}</p></div>
-    <div class="grid-cards">${Object.entries(r.connections).map(([k, cs]) => `<div class="panel"><h3 class="kind">${esc(k)}</h3><p class="small muted">${esc(KIND_KO()[k] || "역방향 흐름")}</p>${cs.map(pathHTML).join("")}</div>`).join("")}</div>`;
+    <div class="grid-cards">${Object.entries(r.connections).map(([k, cs]) => `<div class="panel"><h3 class="kind">${esc(ko("kind", k))}</h3><p class="small muted">${esc(KIND_KO()[k] || "역방향 흐름")}</p>${cs.map(pathHTML).join("")}</div>`).join("")}</div>`;
 }
 async function runConnection() {
   const a = resolveInput($("#conn-a").value), b = resolveInput($("#conn-b").value);
@@ -627,7 +660,7 @@ async function loadLandscape() {
     <line x1="${pad}" y1="${H - pad}" x2="${W - pad}" y2="${H - pad}" stroke="${css("--border")}"/><line x1="${pad}" y1="${pad}" x2="${pad}" y2="${H - pad}" stroke="${css("--border")}"/>
     ${l.points.map((p) => `<g data-person="${esc(p.id)}"><circle cx="${sx(p.x).toFixed(1)}" cy="${sy(p.y).toFixed(1)}" r="5" fill="${gc(p.group)}"><title>${esc(p.label)} · ${esc(p.group)}</title></circle>${labelled.has(p.id) ? `<text x="${(sx(p.x) + 7).toFixed(1)}" y="${(sy(p.y) + 3).toFixed(1)}">${esc(p.label)}</text>` : ""}</g>`).join("")}
   </svg>`;
-  $("#landscape-axes").innerHTML = l.axes.map((a, i) => `<div>축 ${i + 1}: ${a.loadings.map((x) => `${esc(x.label)}(${x.weight > 0 ? "+" : ""}${x.weight})`).join(", ")}</div>`).join("");
+  $("#landscape-axes").innerHTML = l.axes.map((a, i) => `<div>주성분 ${i + 1}: ${a.loadings.map((x) => `${esc(x.label)}(${x.weight > 0 ? "+" : ""}${x.weight})`).join(", ")}</div>`).join("");
   box.querySelectorAll("[data-person]").forEach((g) => g.addEventListener("click", () => { $("#dna-person").value = g.dataset.person; runDNA(); }));
 }
 
@@ -660,7 +693,7 @@ async function runDiscover() {
   const r = await api("/api/discover", { body: {} });
   STATE.discovery = r.results;
   out.innerHTML = `<div class="grid-cards">${Object.entries(r.results).map(([k, items]) => `<div class="panel"><h3>${esc(DISC_KO[k] || k)} <span class="muted">${items.length}</span></h3>
-    ${items.slice(0, 12).map((it, i) => `<div class="issue small"><div>${nodeLink(it.source, it.source_label)} <span class="muted">—${esc(it.predicate)}→</span> ${nodeLink(it.target, it.target_label)} <span class="muted">(${it.score})</span></div><div class="muted">${esc(it.rationale)}</div>
+    ${items.slice(0, 12).map((it, i) => `<div class="issue small"><div>${nodeLink(it.source, it.source_label)} <span class="muted">—${esc(relKo(it.predicate))}→</span> ${nodeLink(it.target, it.target_label)} <span class="muted">(${it.score})</span></div><div class="muted">${esc(it.rationale)}</div>
     ${it.commit_as === "report_only" ? "" : `<button class="small" data-commit="${k}:${i}">가설로 기록</button>`}</div>`).join("") || '<p class="muted small">없음</p>'}</div>`).join("")}</div>`;
   out.querySelectorAll("[data-commit]").forEach((b) => b.addEventListener("click", async () => {
     const [k, i] = b.dataset.commit.split(":");
@@ -680,7 +713,7 @@ async function loadReview() {
   $("#queue-count").textContent = q.length || "";
   out.innerHTML = `<h2>검토 대기 관계 <span class="muted">${q.length}</span></h2>
     <div class="grid-cards">${q.map((e) => `<div class="panel" data-edge-card="${esc(e.id)}">
-      <div class="row">${pill(e.epistemic_status)} <span class="small muted">${esc(e.origin)} · ${esc(e.evidence_status)}</span> <span style="margin-left:auto">${edgeLink(e.id)}</span></div>
+      <div class="row">${pill(e.epistemic_status)} <span class="small muted">${esc(ko("origin", e.origin))} · 증거 ${esc(ko("evstatus", e.evidence_status))}</span> <span style="margin-left:auto">${edgeLink(e.id)}</span></div>
       <h3 style="margin:8px 0">${nodeLink(e.source, e.source_label)} <span class="muted">—${esc(STATE.relKo[e.predicate] || e.predicate)}→</span> ${nodeLink(e.target, e.target_label)}</h3>
       <div>${conf(e.confidence)}</div>${e.note ? `<p class="small">${esc(e.note)}</p>` : ""}
       ${evidenceHTML(e.evidence)}
@@ -695,10 +728,10 @@ function candidatesHTML(cands) {
   if (!cands.length) return '<p class="panel muted small">대기 중인 후보가 없습니다.</p>';
   return `<div class="panel table-wrap"><table><thead><tr><th>종류</th><th>내용</th><th>점수</th><th></th></tr></thead><tbody>${cands.map((c) => {
     const p = c.payload;
-    const body = c.kind === "edge" ? `${nodeLink(p.source)} <span class="muted">—${esc(p.predicate)}→</span> ${nodeLink(p.target)}<div class="small muted">“${esc(p.sentence || "")}”</div>`
+    const body = c.kind === "edge" ? `${nodeLink(p.source)} <span class="muted">—${esc(relKo(p.predicate))}→</span> ${nodeLink(p.target)}<div class="small muted">“${esc(p.sentence || "")}”</div>`
       : c.kind === "proposition" ? `${esc(p.statement)}<div class="small muted">${esc(label(p.author))} · ${(p.concepts || []).map(label).map(esc).join(", ")}</div>`
-      : `${esc(p.type)}: <b>${esc(p.label)}</b><div class="small muted">${esc(p.sentence || p.description || "")}</div>`;
-    return `<tr><td>${esc(c.kind)}<div class="small muted">${esc(c.origin)} · ${esc(p.method || "")}</div></td><td>${body}</td><td>${(+c.score).toFixed(2)}</td><td><div class="row"><button class="small ok" data-cand="${c.id}" data-act="approve">채택</button><button class="small bad" data-cand="${c.id}" data-act="reject">버림</button></div></td></tr>`;
+      : `${esc(typeKo(p.type))}: <b>${esc(p.label)}</b><div class="small muted">${esc(p.sentence || p.description || "")}</div>`;
+    return `<tr><td>${esc(ko("cand", c.kind))}<div class="small muted">${esc(ko("origin", c.origin))} · ${esc(ko("method", p.method || ""))}</div></td><td>${body}</td><td>${(+c.score).toFixed(2)}</td><td><div class="row"><button class="small ok" data-cand="${c.id}" data-act="approve">채택</button><button class="small bad" data-cand="${c.id}" data-act="reject">버림</button></div></td></tr>`;
   }).join("")}</tbody></table></div>`;
 }
 function bindCandidates(root, after) {
@@ -754,23 +787,23 @@ async function loadOntology() {
   const s = STATE.schema;
   out.innerHTML = `
   <div class="grid-cards">
-    <div class="panel"><h2>현황</h2><dl class="kv"><dt>스키마</dt><dd>v${esc(stats.schema_version)}</dd><dt>온톨로지</dt><dd>v${esc(stats.ontology_version)}</dd><dt>엔티티</dt><dd>${stats.entities}</dd><dt>관계</dt><dd>${stats.edges}</dd><dt>증거</dt><dd>${stats.evidence}</dd><dt>문서</dt><dd>${stats.documents}</dd></dl>
-      <h3 style="margin-top:10px">타입별</h3><div class="tags">${Object.entries(stats.entities_by_type).map(([k, v]) => `<span class="tag">${esc(k)} ${v}</span>`).join("")}</div>
+    <div class="panel"><h2>현황</h2><dl class="kv"><dt>스키마</dt><dd>${esc(stats.schema_version)}판</dd><dt>온톨로지</dt><dd>${esc(stats.ontology_version)}판</dd><dt>엔티티</dt><dd>${stats.entities}</dd><dt>관계</dt><dd>${stats.edges}</dd><dt>증거</dt><dd>${stats.evidence}</dd><dt>문서</dt><dd>${stats.documents}</dd></dl>
+      <h3 style="margin-top:10px">타입별</h3><div class="tags">${Object.entries(stats.entities_by_type).map(([k, v]) => `<span class="tag">${esc(typeKo(k))} ${v}</span>`).join("")}</div>
       <h3 style="margin-top:10px">인식 상태별</h3><div class="tags">${Object.entries(stats.edges_by_status).map(([k, v]) => `${pill(k)} ${v}`).join(" ")}</div></div>
     <div class="panel"><h2>검증 감사</h2><p>${val.ok ? '<span class="pill accepted">스키마 오류 없음</span>' : '<span class="pill rejected" style="text-decoration:none">오류 있음</span>'}</p>
-      ${val.issues.slice(0, 30).map((i) => `<div class="small" style="color:var(${i.level === "error" ? "--bad" : "--warn"})">${esc(i.code)} — ${esc(i.message)} ${i.ref ? (i.ref.startsWith("E") ? edgeLink(i.ref) : nodeLink(i.ref)) : ""}</div>`).join("") || '<p class="small muted">경고 없음</p>'}</div>
-    <div class="panel"><h2>버전 (Ontology Versioning)</h2>${versions.map((v) => `<div class="rel"><b>v${esc(v.version)}</b> <span class="small muted">${new Date(v.created_at * 1000).toLocaleString()}</span><div class="small">${esc(v.note)}</div></div>`).join("")}
+      ${val.issues.slice(0, 30).map((i) => `<div class="small" style="color:var(${i.level === "error" ? "--bad" : "--warn"})">${i.level === "error" ? "오류" : "경고"} — ${esc(i.message)} ${i.ref ? (i.ref.startsWith("E") ? edgeLink(i.ref) : nodeLink(i.ref)) : ""}</div>`).join("") || '<p class="small muted">경고 없음</p>'}</div>
+    <div class="panel"><h2>온톨로지 버전 관리</h2>${versions.map((v) => `<div class="rel"><b>${esc(v.version)}판</b> <span class="small muted">${new Date(v.created_at * 1000).toLocaleString()}</span><div class="small">${esc(v.note)}</div></div>`).join("")}
       <div class="row" style="margin-top:8px"><input id="ver-name" placeholder="새 버전 (예: 0.2.0)"><input id="ver-note" placeholder="메모"><button id="ver-go" class="small">스냅샷</button></div>
-      <h3 style="margin-top:10px">내보내기</h3><div class="row"><a href="/api/export/json" download="higo.json">JSON</a><a href="/api/export/cypher" download="higo.cypher">Neo4j Cypher</a><a href="/api/export/turtle" download="higo.ttl">RDF/Turtle (OWL)</a></div></div>
+      <h3 style="margin-top:10px">내보내기</h3><div class="row"><a href="/api/export/json" download="higo.json">전체 데이터(JSON)</a><a href="/api/export/cypher" download="higo.cypher">그래프 DB용(Neo4j Cypher)</a><a href="/api/export/turtle" download="higo.ttl">시맨틱 웹용(RDF/Turtle)</a></div></div>
   </div>
-  <div class="panel"><h2>증거 위계</h2><div class="table-wrap"><table><thead><tr><th>Tier</th><th>종류</th><th>가중치</th></tr></thead><tbody>${s.evidence_tiers.map((t) => `<tr><td>${t.tier}</td><td>${esc(t.label_ko)}</td><td>${t.weight}</td></tr>`).join("")}</tbody></table></div>
+  <div class="panel"><h2>증거 위계</h2><div class="table-wrap"><table><thead><tr><th>등급</th><th>종류</th><th>가중치</th></tr></thead><tbody>${s.evidence_tiers.map((t) => `<tr><td>${t.tier}등급</td><td>${esc(t.label_ko)}</td><td>${t.weight}</td></tr>`).join("")}</tbody></table></div>
     <p class="small muted">확신도 = (지지 증거 noisy-OR) × 증거 성격 계수(${Object.entries(s.evidence_status).map(([k, v]) => `${esc(v.label_ko)} ${v.factor}`).join(", ")}) × (1 − 0.6 × 반대 증거 noisy-OR)</p></div>
   <div class="two-col">
-    <div class="panel"><h2>엔티티 타입</h2><div class="table-wrap"><table><thead><tr><th>타입</th><th>설명</th><th>속성</th></tr></thead><tbody>${s.entity_types.map((t) => `<tr><td><b>${esc(t.name)}</b><div class="small muted">${esc(t.label_ko)}</div></td><td>${esc(t.description)}</td><td class="small">${t.properties.map(esc).join(", ")}</td></tr>`).join("")}</tbody></table></div></div>
-    <div class="panel"><h2>인식 상태 생애주기</h2>${Object.entries(s.epistemic_status).map(([k, v]) => `<div class="rel">${pill(k)} <span class="small">${esc(v)}</span> <span class="small muted" style="margin-left:auto">→ ${(s.status_transitions[k] || []).join(", ")}</span></div>`).join("")}</div>
+    <div class="panel"><h2>엔티티 유형</h2><div class="table-wrap"><table><thead><tr><th>유형</th><th>설명</th><th>속성</th></tr></thead><tbody>${s.entity_types.map((t) => `<tr><td><b>${esc(t.label_ko)}</b><div class="small muted">${esc(t.name)}</div></td><td>${esc(t.description)}</td><td class="small">${t.properties.map(esc).join(", ")}</td></tr>`).join("")}</tbody></table></div></div>
+    <div class="panel"><h2>인식 상태 생애주기</h2>${Object.entries(s.epistemic_status).map(([k, v]) => `<div class="rel">${pill(k)} <span class="small">${esc(v)}</span> <span class="small muted" style="margin-left:auto">→ ${(s.status_transitions[k] || []).map((x) => ko("status", x)).join(", ")}</span></div>`).join("")}</div>
   </div>
-  <div class="panel"><h2>관계 타입</h2><div class="table-wrap"><table><thead><tr><th>관계</th><th>범주</th><th>설명</th><th>domain → range</th><th>증거 필수</th></tr></thead><tbody>${s.relation_types.map((r) => `<tr><td><b>${esc(r.name)}</b><div class="small muted">${esc(r.label_ko)}</div></td><td><span class="line" style="border-color:${catColor(r.category)}"></span> ${esc(r.category)}</td><td>${esc(r.description)}</td><td class="small">${r.domain.join("|")} → ${r.range.join("|")}${r.symmetric ? " (대칭)" : ""}</td><td>${r.requires_evidence ? "✓" : ""}</td></tr>`).join("")}</tbody></table></div></div>
-  <div class="panel"><h2>최근 변경 이력</h2><div class="table-wrap"><table><thead><tr><th>시각</th><th>대상</th><th>행위</th><th>행위자</th><th>사유</th></tr></thead><tbody>${hist.map((h) => `<tr><td class="small">${new Date(h.ts * 1000).toLocaleString()}</td><td>${h.object_kind === "edge" ? edgeLink(h.object_id) : esc(h.object_id)}</td><td>${esc(h.action)}</td><td>${esc(h.actor)}</td><td class="small">${esc(h.reason || "")}</td></tr>`).join("")}</tbody></table></div></div>`;
+  <div class="panel"><h2>관계 유형</h2><div class="table-wrap"><table><thead><tr><th>관계</th><th>범주</th><th>설명</th><th>출발 → 도착 유형</th><th>증거 필수</th></tr></thead><tbody>${s.relation_types.map((r) => `<tr><td><b>${esc(r.label_ko)}</b><div class="small muted">${esc(r.name)}</div></td><td><span class="line" style="border-color:${catColor(r.category)}"></span> ${esc(ko("cat", r.category))}</td><td>${esc(r.description)}</td><td class="small">${r.domain.map((x) => x === "*" ? "전체" : typeKo(x)).join("·")} → ${r.range.map((x) => x === "*" ? "전체" : typeKo(x)).join("·")}${r.symmetric ? " (대칭)" : ""}</td><td>${r.requires_evidence ? "✓" : ""}</td></tr>`).join("")}</tbody></table></div></div>
+  <div class="panel"><h2>최근 변경 이력</h2><div class="table-wrap"><table><thead><tr><th>시각</th><th>대상</th><th>작업</th><th>수행자</th><th>사유</th></tr></thead><tbody>${hist.map((h) => `<tr><td class="small">${new Date(h.ts * 1000).toLocaleString()}</td><td>${h.object_kind === "edge" ? edgeLink(h.object_id) : esc(h.object_id)}</td><td>${esc(ko("action", h.action))}</td><td>${esc(actorKo(h.actor))}</td><td class="small">${esc(h.reason || "")}</td></tr>`).join("")}</tbody></table></div></div>`;
   $("#ver-go").addEventListener("click", async () => {
     const v = $("#ver-name").value.trim(); if (!v) return;
     await api("/api/versions", { body: { version: v, note: $("#ver-note").value } });
