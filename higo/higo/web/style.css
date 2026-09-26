@@ -184,3 +184,6 @@ th { color: var(--muted); font-weight: 600; font-size: 12px; }
   .axis .vs { text-align: center; }
   .bar-row { grid-template-columns: 90px 1fr 40px; }
 }
+
+code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; background: var(--surface-2); padding: 1px 5px; border-radius: 4px; }
+.md table { margin: 6px 0 12px; }

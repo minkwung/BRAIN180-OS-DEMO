@@ -6,6 +6,7 @@
 """
 from __future__ import annotations
 
+import json
 import time
 
 from . import ontology as O
@@ -47,10 +48,22 @@ def validate_edge(store: Store, edge: dict, report: O.ValidationReport | None = 
         report.error("missing_evidence", f"'{rel.name}' 관계는 승인 전에 증거가 필요함", ref)
     if status == "accepted" and edge.get("origin") == "ai":
         # AI 가 만든 관계는 반드시 사람이 승인해야 하며, 승인자가 history 에 남아야 한다.
-        approvals = [h for h in store.history(ref) if h["action"] == "review"
-                     and (h.get("after") or {}).get("epistemic_status") == "accepted"
-                     and not str(h.get("actor", "")).startswith(("ai", "system"))]
-        if not approvals:
+        hist = store.history(ref)
+        props = edge.get("props") or {}
+        review = props.get("review") or {}
+        human = lambda a: bool(a) and not str(a).startswith(("ai", "system", "policy"))  # noqa: E731
+        approvals = [h for h in hist if h["action"] == "review"
+                     and (h.get("after") or {}).get("epistemic_status") == "accepted" and human(h.get("actor"))]
+        # 승인 기록은 데이터 파일에도 남는다 (history 는 파일에 저장하지 않으므로)
+        if review.get("status") == "accepted" and human(review.get("actor")):
+            approvals.append(review)
+        # 위험도 정책(policy.py)이 원문 대조를 거쳐 자동 반영한 사실 확인형 관계는 허용한다
+        auto = [h for h in hist if h["action"] == "auto_accept" and h.get("actor") == "policy:auto"]
+        if props.get("auto_accepted"):
+            auto.append(props["auto_accepted"])
+        if auto and O.RELATION_TYPES[edge["predicate"]].category in O.CAUSAL_CATEGORIES:
+            report.error("auto_accepted_causal", "인과 관계가 자동 반영됨 — 정책 위반", ref)
+        if not approvals and not auto:
             report.error("unreviewed_ai_edge", "AI 가 생성한 관계가 인간 검증 없이 승인 상태임", ref)
     if evidence and all(e["tier"] == 6 for e in evidence) and status == "accepted":
         report.warn("ai_only_evidence", "승인된 관계의 증거가 AI 추론(Tier 6)뿐임", ref)
@@ -123,9 +136,11 @@ class Reviewer:
             errors = [i for i in rep.issues if i.level == "error"]
             if errors:
                 raise ReviewError("; ".join(i.message for i in errors))
+        props = dict(edge.get("props") or {})
+        props["review"] = {"status": new_status, "actor": actor, "at": round(time.time()), "reason": reason}
         with self.store.tx() as c:
-            c.execute("UPDATE edges SET epistemic_status=?, version=version+1, updated_at=?"
-                      " WHERE id=?", (new_status, time.time(), edge_id))
+            c.execute("UPDATE edges SET epistemic_status=?, props=?, version=version+1, updated_at=?"
+                      " WHERE id=?", (new_status, json.dumps(props, ensure_ascii=False), time.time(), edge_id))
             self.store._log(c, "edge", edge_id, "review", {"epistemic_status": cur},
                             {"epistemic_status": new_status}, actor, reason)
         return self.store.get_edge(edge_id, with_evidence=True)  # type: ignore[return-value]

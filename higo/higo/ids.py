@@ -13,7 +13,8 @@ def slugify(text: str) -> str:
     if not s or not s.isascii():
         # 비 ASCII 라벨은 짧은 해시를 덧붙여 충돌을 피한다
         h = hashlib.sha1(text.encode("utf-8")).hexdigest()[:8]
-        s = (re.sub(r"[^a-z0-9\-]", "", s)[:24] or "x") + "-" + h
+        ascii_part = re.sub(r"-{2,}", "-", re.sub(r"[^a-z0-9\-]", "", s)).strip("-")[:24]
+        s = (ascii_part or "x") + "-" + h
     return s[:64]
 
 

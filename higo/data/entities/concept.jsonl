@@ -1,0 +1,115 @@
+{"id":"concept:absolute-space","type":"Concept","label":"Absolute Space","label_ko":"절대공간","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:absolute-spirit","type":"Concept","label":"Absolute Spirit","label_ko":"절대정신","aliases":["Geist","정신"],"description":"헤겔 체계의 정점","origin":"seed","status":"accepted","props":{"definition":"헤겔 체계의 정점"}}
+{"id":"concept:absurd","type":"Concept","label":"The Absurd","label_ko":"부조리","description":"의미를 구하는 인간과 침묵하는 세계의 대면","origin":"seed","status":"accepted","props":{"definition":"의미를 구하는 인간과 침묵하는 세계의 대면"}}
+{"id":"concept:alienation","type":"Concept","label":"Alienation","label_ko":"소외","aliases":["estranged labour","소외된 노동"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:analytic-geometry","type":"Concept","label":"Analytic Geometry","label_ko":"해석기하학","aliases":["coordinate geometry","좌표"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:anamnesis","type":"Concept","label":"Recollection (Anamnesis)","label_ko":"상기설","aliases":["recollection","상기"],"description":"배움은 영혼이 이미 알던 것을 떠올리는 것이라는 플라톤의 이론","origin":"seed","status":"accepted","props":{"definition":"배움은 영혼이 이미 알던 것을 떠올리는 것이라는 플라톤의 이론"}}
+{"id":"concept:ataraxia","type":"Concept","label":"Ataraxia","label_ko":"평정","aliases":["tranquility","마음의 평정"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:authenticity","type":"Concept","label":"Authenticity","label_ko":"본래성","aliases":["Eigentlichkeit","진정성"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:bad-faith","type":"Concept","label":"Bad Faith","label_ko":"자기기만","aliases":["mauvaise foi"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:being","type":"Concept","label":"Being","label_ko":"존재","aliases":["Sein"],"description":"존재자를 존재자로 규정하는 것","origin":"seed","status":"accepted","props":{"definition":"존재자를 존재자로 규정하는 것"}}
+{"id":"concept:best-possible-world","type":"Concept","label":"Best of All Possible Worlds","label_ko":"최선의 세계","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:calculus","type":"Concept","label":"Calculus","label_ko":"미적분","aliases":["infinitesimal calculus","fluxions","미분"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:categorical-imperative","type":"Concept","label":"Categorical Imperative","label_ko":"정언명령","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:central-planning","type":"Concept","label":"Central Planning","label_ko":"중앙계획","aliases":["planned economy","계획경제"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:class-struggle","type":"Concept","label":"Class Struggle","label_ko":"계급투쟁","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:cogito","type":"Concept","label":"Cogito","label_ko":"코기토","aliases":["cogito ergo sum","나는 생각한다 그러므로 존재한다"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:collectivism","type":"Concept","label":"Collectivism","label_ko":"집단주의","aliases":["socialism","사회주의"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:comparative-advantage","type":"Concept","label":"Comparative Advantage","label_ko":"비교우위","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:critique-of-religion","type":"Concept","label":"Critique of Religion","label_ko":"종교 비판","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:dasein","type":"Concept","label":"Dasein","label_ko":"현존재","description":"자신의 존재가 문제가 되는 존재자, 인간","origin":"seed","status":"accepted","props":{"definition":"자신의 존재가 문제가 되는 존재자, 인간"}}
+{"id":"concept:determinism","type":"Concept","label":"Determinism","label_ko":"결정론","aliases":["necessity","필연성"],"description":"모든 사건은 선행 원인에 의해 결정된다","origin":"seed","status":"accepted","props":{"definition":"모든 사건은 선행 원인에 의해 결정된다"}}
+{"id":"concept:dialectic","type":"Concept","label":"Dialectic","label_ko":"변증법","aliases":["dialectics"],"description":"모순을 통한 전개의 논리","origin":"seed","status":"accepted","props":{"definition":"모순을 통한 전개의 논리"}}
+{"id":"concept:dispersed-knowledge","type":"Concept","label":"Dispersed Knowledge","label_ko":"분산된 지식","aliases":["knowledge problem","price signals","가격 신호"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:division-of-labor","type":"Concept","label":"Division of Labor","label_ko":"분업","aliases":["specialization","전문화"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:economic-freedom","type":"Concept","label":"Economic Freedom","label_ko":"경제적 자유","aliases":["free market"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:effective-demand","type":"Concept","label":"Effective Demand","label_ko":"유효수요","aliases":["aggregate demand","총수요"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:empiricism","type":"Concept","label":"Empiricism","label_ko":"경험론","aliases":["경험주의"],"description":"경험이 지식의 원천이라는 입장","origin":"seed","status":"accepted","props":{"definition":"경험이 지식의 원천이라는 입장"}}
+{"id":"concept:enlightenment-concept","type":"Concept","label":"Enlightenment as Autonomy of Reason","label_ko":"계몽(이성의 자율)","aliases":["sapere aude","계몽"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:epistemic-freedom","type":"Concept","label":"Freedom of Thought","label_ko":"사상의 자유","aliases":["freedom of expression","freedom to philosophize","표현의 자유"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:epoche","type":"Concept","label":"Epoché","label_ko":"판단중지","aliases":["bracketing","에포케","현상학적 환원"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:eternal-recurrence","type":"Concept","label":"Eternal Recurrence","label_ko":"영원회귀","aliases":["영겁회귀"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:eudaimonia","type":"Concept","label":"Eudaimonia","label_ko":"에우다이모니아","aliases":["happiness","행복","flourishing"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:existential-freedom","type":"Concept","label":"Existential Freedom","label_ko":"실존적 자유","aliases":["condemned to be free"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:existentialism-concept","type":"Concept","label":"Existence Precedes Essence","label_ko":"실존은 본질에 앞선다","aliases":["existentialism","실존주의","실존"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:experimental-method","type":"Concept","label":"Experimental Method","label_ko":"실험적 방법","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:faith-and-reason","type":"Concept","label":"Faith and Reason","label_ko":"신앙과 이성","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:falsifiability","type":"Concept","label":"Falsifiability","label_ko":"반증가능성","aliases":["falsification","반증주의"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:forms","type":"Concept","label":"Theory of Forms","label_ko":"이데아론","aliases":["Ideas","이데아","Forms"],"description":"감각적 사물과 분리된, 영원불변하는 형상(이데아)이 참된 실재라는 이론","origin":"seed","status":"accepted","props":{"definition":"감각적 사물과 분리된, 영원불변하는 형상(이데아)이 참된 실재라는 이론"}}
+{"id":"concept:four-causes","type":"Concept","label":"Four Causes","label_ko":"4원인설","description":"질료인·형상인·운동인·목적인","origin":"seed","status":"accepted","props":{"definition":"질료인·형상인·운동인·목적인"}}
+{"id":"concept:free-will","type":"Concept","label":"Free Will (Metaphysical Freedom)","label_ko":"자유의지","aliases":["liberum arbitrium","형이상학적 자유"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:freedom","type":"Concept","label":"Freedom","label_ko":"자유","aliases":["liberty"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:freedom-as-necessity","type":"Concept","label":"Freedom as Understanding Necessity","label_ko":"필연성의 인식으로서의 자유","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:general-will","type":"Concept","label":"General Will","label_ko":"일반의지","aliases":["volonté générale"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:god-existence","type":"Concept","label":"Proofs of God's Existence","label_ko":"신 존재 증명","aliases":["five ways","다섯 가지 길"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:harm-principle","type":"Concept","label":"Harm Principle","label_ko":"해악의 원리","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:historical-materialism","type":"Concept","label":"Historical Materialism","label_ko":"역사유물론","aliases":["materialist conception of history","유물사관"],"description":"물질적 생산관계가 역사를 규정한다는 이론","origin":"seed","status":"accepted","props":{"definition":"물질적 생산관계가 역사를 규정한다는 이론"}}
+{"id":"concept:hylomorphism","type":"Concept","label":"Hylomorphism","label_ko":"형상질료론","aliases":["form and matter","형상과 질료"],"description":"개별 실체는 형상과 질료의 결합이라는 이론","origin":"seed","status":"accepted","props":{"definition":"개별 실체는 형상과 질료의 결합이라는 이론"}}
+{"id":"concept:ideal-state","type":"Concept","label":"Ideal State","label_ko":"이상국가","aliases":["kallipolis"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:idealism","type":"Concept","label":"Idealism","label_ko":"관념론","description":"실재가 정신적이거나 정신에 의존한다는 입장","origin":"seed","status":"accepted","props":{"definition":"실재가 정신적이거나 정신에 의존한다는 입장"}}
+{"id":"concept:ideology-critique","type":"Concept","label":"Ideology Critique / Genealogy of Values","label_ko":"이데올로기 비판·가치의 계보","aliases":["ideology","genealogy","이데올로기","계보학"],"description":"지배적 관념·가치가 권력관계에서 기원했음을 폭로하는 비판","origin":"seed","status":"accepted","props":{"definition":"지배적 관념·가치가 권력관계에서 기원했음을 폭로하는 비판"}}
+{"id":"concept:individualism","type":"Concept","label":"Individualism","label_ko":"개인주의","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:innate-ideas","type":"Concept","label":"Innate Ideas","label_ko":"본유관념","aliases":["타고난 관념"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:inner-freedom","type":"Concept","label":"Inner Freedom","label_ko":"내면의 자유","aliases":["dichotomy of control","통제의 이분법"],"description":"통제할 수 있는 것과 없는 것의 구분에 기초한 스토아적 자유","origin":"seed","status":"accepted","props":{"definition":"통제할 수 있는 것과 없는 것의 구분에 기초한 스토아적 자유"}}
+{"id":"concept:intentionality","type":"Concept","label":"Intentionality","label_ko":"지향성","description":"의식은 언제나 무엇에 대한 의식이다","origin":"seed","status":"accepted","props":{"definition":"의식은 언제나 무엇에 대한 의식이다"}}
+{"id":"concept:invisible-hand","type":"Concept","label":"Invisible Hand","label_ko":"보이지 않는 손","aliases":["market order","시장"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:is-ought","type":"Concept","label":"Is–Ought Problem","label_ko":"존재-당위 문제","aliases":["Hume's guillotine"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:just-exchange","type":"Concept","label":"Just Exchange","label_ko":"정의로운 교환","aliases":["commutative justice","money as measure","교환 정의","화폐"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:just-price","type":"Concept","label":"Just Price","label_ko":"공정가격","aliases":["iustum pretium"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:justice","type":"Concept","label":"Justice","label_ko":"정의","aliases":["dikaiosyne"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:justice-as-fairness","type":"Concept","label":"Justice as Fairness","label_ko":"공정으로서의 정의","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:labor-theory-of-property","type":"Concept","label":"Labor Theory of Property","label_ko":"노동 소유론","description":"노동을 섞은 것이 소유가 된다는 로크의 이론","origin":"seed","status":"accepted","props":{"definition":"노동을 섞은 것이 소유가 된다는 로크의 이론"}}
+{"id":"concept:labor-theory-of-value","type":"Concept","label":"Labor Theory of Value","label_ko":"노동가치론","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:language-game","type":"Concept","label":"Language-Game","label_ko":"언어게임","aliases":["meaning as use","family resemblance","가족유사성"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:leap-of-faith","type":"Concept","label":"Leap of Faith","label_ko":"신앙의 도약","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:logical-analysis","type":"Concept","label":"Logical Analysis","label_ko":"논리적 분석","aliases":["theory of descriptions","기술 이론"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:logicism","type":"Concept","label":"Logicism","label_ko":"논리주의","description":"수학은 논리로 환원된다","origin":"seed","status":"accepted","props":{"definition":"수학은 논리로 환원된다"}}
+{"id":"concept:master-slave-morality","type":"Concept","label":"Master and Slave Morality","label_ko":"주인도덕과 노예도덕","aliases":["노예도덕"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:materialism","type":"Concept","label":"Materialism","label_ko":"유물론","description":"물질만이 실재한다는 입장","origin":"seed","status":"accepted","props":{"definition":"물질만이 실재한다는 입장"}}
+{"id":"concept:mathematization-of-nature","type":"Concept","label":"Mathematization of Nature","label_ko":"자연의 수학화","aliases":["mathematical physics"],"description":"자연을 수학적 법칙으로 기술하려는 기획","origin":"seed","status":"accepted","props":{"definition":"자연을 수학적 법칙으로 기술하려는 기획"}}
+{"id":"concept:mechanism","type":"Concept","label":"Mechanical Philosophy","label_ko":"기계론적 자연관","aliases":["mechanism","기계론"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:mind-body-dualism","type":"Concept","label":"Mind–Body Dualism","label_ko":"심신이원론","aliases":["Cartesian dualism","이원론"],"description":"정신과 물체는 서로 다른 실체라는 입장","origin":"seed","status":"accepted","props":{"definition":"정신과 물체는 서로 다른 실체라는 입장"}}
+{"id":"concept:modernity","type":"Concept","label":"Modernity","label_ko":"근대성","aliases":["modern society"],"description":"전통적 질서의 해체와 합리화·자본주의·세속화로 특징지어지는 근대의 조건","origin":"seed","status":"accepted","props":{"definition":"전통적 질서의 해체와 합리화·자본주의·세속화로 특징지어지는 근대의 조건"}}
+{"id":"concept:monad","type":"Concept","label":"Monad","label_ko":"모나드","aliases":["모나드론"],"description":"창이 없는 단순 실체","origin":"seed","status":"accepted","props":{"definition":"창이 없는 단순 실체"}}
+{"id":"concept:moral-freedom","type":"Concept","label":"Moral Freedom (Autonomy)","label_ko":"도덕적 자유(자율)","aliases":["autonomy","자율"],"description":"스스로 부과한 법칙에 따르는 것","origin":"seed","status":"accepted","props":{"definition":"스스로 부과한 법칙에 따르는 것"}}
+{"id":"concept:natural-law","type":"Concept","label":"Natural Law","label_ko":"자연법","aliases":["lex naturalis"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:natural-rights","type":"Concept","label":"Natural Rights","label_ko":"자연권","aliases":["life, liberty, property","천부인권"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:negative-freedom","type":"Concept","label":"Negative Freedom","label_ko":"소극적 자유","aliases":["freedom from"],"description":"외부의 간섭·강제가 없는 상태","origin":"seed","status":"accepted","props":{"definition":"외부의 간섭·강제가 없는 상태"}}
+{"id":"concept:nihilism","type":"Concept","label":"Nihilism","label_ko":"니힐리즘","aliases":["death of God","신의 죽음","허무주의"],"description":"최고 가치들이 스스로 가치를 잃는 사태","origin":"seed","status":"accepted","props":{"definition":"최고 가치들이 스스로 가치를 잃는 사태"}}
+{"id":"concept:objective-truth","type":"Concept","label":"Objective Truth","label_ko":"객관적 진리","aliases":["objectivity","객관성"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:open-society","type":"Concept","label":"Open Society","label_ko":"열린사회","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:paradigm","type":"Concept","label":"Paradigm","label_ko":"패러다임","aliases":["normal science","정상과학","과학혁명"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:phenomenology-concept","type":"Concept","label":"Phenomenological Method","label_ko":"현상학적 방법","aliases":["phenomenology","현상학","사태 자체로"],"description":"의식에 주어지는 그대로를 기술하는 방법","origin":"seed","status":"accepted","props":{"definition":"의식에 주어지는 그대로를 기술하는 방법"}}
+{"id":"concept:philosopher-king","type":"Concept","label":"Philosopher-King","label_ko":"철인정치","aliases":["철인왕"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:picture-theory","type":"Concept","label":"Picture Theory of Meaning","label_ko":"그림이론","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:political-freedom","type":"Concept","label":"Political Freedom","label_ko":"정치적 자유","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:political-realism","type":"Concept","label":"Political Realism","label_ko":"정치적 현실주의","aliases":["virtù","realpolitik"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:positive-freedom","type":"Concept","label":"Positive Freedom","label_ko":"적극적 자유","aliases":["freedom to","self-mastery"],"description":"자기 자신의 주인이 되는 것, 자기실현","origin":"seed","status":"accepted","props":{"definition":"자기 자신의 주인이 되는 것, 자기실현"}}
+{"id":"concept:private-property","type":"Concept","label":"Private Property","label_ko":"사유재산","aliases":["property","재산"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:problem-of-induction","type":"Concept","label":"Problem of Induction","label_ko":"귀납의 문제","aliases":["induction","귀납"],"description":"관찰된 사례에서 관찰되지 않은 사례로의 추론은 이성적으로 정당화되지 않는다는 문제","origin":"seed","status":"accepted","props":{"definition":"관찰된 사례에서 관찰되지 않은 사례로의 추론은 이성적으로 정당화되지 않는다는 문제"}}
+{"id":"concept:rationalism","type":"Concept","label":"Rationalism","label_ko":"합리론","aliases":["합리주의"],"description":"이성이 지식의 주된 원천이라는 입장","origin":"seed","status":"accepted","props":{"definition":"이성이 지식의 주된 원천이라는 입장"}}
+{"id":"concept:relational-space","type":"Concept","label":"Relational Space","label_ko":"관계적 공간","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:relativism","type":"Concept","label":"Relativism","label_ko":"상대주의","aliases":["perspectivism","관점주의"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:relativity","type":"Concept","label":"Theory of Relativity","label_ko":"상대성이론","aliases":["special relativity","특수상대성"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:self-interest","type":"Concept","label":"Self-Interest","label_ko":"자기이익","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:skepticism","type":"Concept","label":"Skepticism","label_ko":"회의주의","aliases":["methodic doubt","방법적 회의"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:social-contract-concept","type":"Concept","label":"Social Contract","label_ko":"사회계약","aliases":["social contract","사회계약론"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:socratic-method","type":"Concept","label":"Socratic Method","label_ko":"소크라테스적 문답법","aliases":["elenchus","Socratic ignorance","무지의 지","산파술"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:sovereignty","type":"Concept","label":"Sovereignty","label_ko":"주권","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:spontaneous-order","type":"Concept","label":"Spontaneous Order","label_ko":"자생적 질서","aliases":["catallaxy"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:state-of-nature","type":"Concept","label":"State of Nature","label_ko":"자연상태","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:substance","type":"Concept","label":"Substance","label_ko":"실체","aliases":["ousia"],"description":"그 자체로 존립하는 것","origin":"seed","status":"accepted","props":{"definition":"그 자체로 존립하는 것"}}
+{"id":"concept:substance-monism","type":"Concept","label":"Substance Monism","label_ko":"실체 일원론","aliases":["Deus sive Natura","신 즉 자연"],"description":"오직 하나의 실체(신 즉 자연)만 존재한다는 입장","origin":"seed","status":"accepted","props":{"definition":"오직 하나의 실체(신 즉 자연)만 존재한다는 입장"}}
+{"id":"concept:surplus-value","type":"Concept","label":"Surplus Value","label_ko":"잉여가치","aliases":["exploitation","착취"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:synthetic-a-priori","type":"Concept","label":"Synthetic A Priori","label_ko":"선험적 종합판단","aliases":["종합적 선천판단"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:tabula-rasa","type":"Concept","label":"Tabula Rasa","label_ko":"백지설","aliases":["white paper","blank slate","백지"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:teleology","type":"Concept","label":"Teleology","label_ko":"목적론","aliases":["final cause","목적인"],"description":"자연물이 본성적 목적을 향한다는 설명 방식","origin":"seed","status":"accepted","props":{"definition":"자연물이 본성적 목적을 향한다는 설명 방식"}}
+{"id":"concept:transcendental-idealism","type":"Concept","label":"Transcendental Idealism","label_ko":"초월적 관념론","description":"우리는 현상만 인식하며, 시공간은 감성의 형식이라는 칸트의 입장","origin":"seed","status":"accepted","props":{"definition":"우리는 현상만 인식하며, 시공간은 감성의 형식이라는 칸트의 입장"}}
+{"id":"concept:truth-as-subjectivity","type":"Concept","label":"Truth as Subjectivity","label_ko":"주체성으로서의 진리","origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:two-cities","type":"Concept","label":"Two Cities","label_ko":"두 도성","aliases":["신국"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:universal-gravitation","type":"Concept","label":"Universal Gravitation","label_ko":"만유인력","aliases":["gravity","중력"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:utilitarianism","type":"Concept","label":"Utilitarianism","label_ko":"공리주의","aliases":["greatest happiness","최대 행복"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:veil-of-ignorance","type":"Concept","label":"Veil of Ignorance","label_ko":"무지의 베일","aliases":["original position","원초적 입장"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:virtue","type":"Concept","label":"Virtue","label_ko":"덕","aliases":["arete","아레테"],"origin":"seed","status":"accepted","props":{"definition":""}}
+{"id":"concept:will-schopenhauer","type":"Concept","label":"Will as Thing-in-Itself","label_ko":"물자체로서의 의지","aliases":["의지"],"description":"세계의 내적 본질은 맹목적 의지라는 쇼펜하우어의 이론","origin":"seed","status":"accepted","props":{"definition":"세계의 내적 본질은 맹목적 의지라는 쇼펜하우어의 이론"}}
+{"id":"concept:will-to-power","type":"Concept","label":"Will to Power","label_ko":"힘에의 의지","description":"생의 근본 충동으로서의 힘에의 의지","origin":"seed","status":"accepted","props":{"definition":"생의 근본 충동으로서의 힘에의 의지"}}

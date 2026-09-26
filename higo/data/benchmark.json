@@ -1,0 +1,28 @@
+{
+  "description": "HIGO 품질 기준 질문 세트. 매 자동 갱신 주기 전후로 채점하며, 점수가 떨어지면 그 주기의 변경은 병합하지 않는다. 질문을 추가할수록 회귀를 더 촘촘하게 잡는다.",
+  "questions": [
+    {"id": "freedom-genealogy", "question": "자유라는 개념은 고대부터 현대까지 어떻게 변화했는가?", "intent": "genealogy",
+     "must_link": ["concept:negative-freedom", "concept:positive-freedom", "person:hobbes", "person:berlin"],
+     "must_mention": ["자유"]},
+    {"id": "rationalism-genealogy", "question": "근대적 합리주의는 어디에서 시작되어 어떻게 변형되었는가?", "intent": "genealogy",
+     "must_link": ["concept:rationalism", "person:descartes", "person:leibniz"]},
+    {"id": "epistemic-chain", "question": "플라톤 → 아리스토텔레스 → 아퀴나스 → 데카르트 → 칸트의 인식론적 연속성과 단절을 찾아라", "intent": "chain",
+     "must_link": ["person:plato", "person:aristotle", "person:aquinas", "person:descartes", "person:kant"],
+     "must_mention": ["직접 영향"]},
+    {"id": "marx-nietzsche", "question": "마르크스와 니체는 근대성에 대해 어떤 공통 문제의식을 가지고 있었으며 어디에서 갈라지는가?", "intent": "compare",
+     "must_link": ["concept:modernity", "prop:marx-melts-into-air", "prop:nietzsche-last-man"],
+     "must_mention": ["근대성"]},
+    {"id": "cross-domain", "question": "동일한 개념이 철학·경제학·정치학에서 어떻게 다른 의미로 변형되었는가?", "intent": "cross_domain"},
+    {"id": "aristotle-jefferson", "question": "아리스토텔레스와 제퍼슨의 영향 관계를 설명하라", "intent": "connection",
+     "must_link": ["person:aquinas", "person:locke"],
+     "must_mention": ["간접"], "must_not": ["증거가 있는 직접 영향 관계가 존재한다"]},
+    {"id": "hume-kant", "question": "흄과 칸트의 영향 관계는?", "intent": "connection",
+     "must_mention": ["증거가 있는 직접 영향 관계가 존재한다"]},
+    {"id": "smith-marx-labor", "question": "애덤 스미스와 마르크스의 노동 개념은 어디에서 갈라지는가?", "intent": "compare",
+     "must_link": ["concept:division-of-labor", "concept:labor-theory-of-value"], "must_mention": ["대립"]},
+    {"id": "plato-nietzsche-truth", "question": "플라톤과 니체가 진리에 대해 논쟁한다면?", "intent": "compare",
+     "must_link": ["concept:forms"], "must_mention": ["대립"]},
+    {"id": "contradictions", "question": "인류 지성사의 핵심 대립 구조는 무엇인가?", "intent": "contradiction",
+     "must_mention": ["합리론", "경험론"]}
+  ]
+}

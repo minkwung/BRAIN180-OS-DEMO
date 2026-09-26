@@ -61,7 +61,8 @@ class Extractor:
                 if n["type"] in ("Era", "Source", "Proposition", "Interpretation", "Argument"):
                     continue
                 for name in {n["label"], n.get("label_ko") or "", *(n.get("aliases") or [])}:
-                    if name and len(name) >= 2:
+                    # 흄·쿤처럼 한 글자인 한국어 인명은 예외적으로 허용한다
+                    if name and (len(name) >= 2 or (n["type"] == "Person" and "\uac00" <= name <= "\ud7a3")):
                         names.append((name.lower(), n["id"], n["type"]))
             names.sort(key=lambda x: -len(x[0]))  # 긴 이름 우선 매칭
             self._gazetteer = names

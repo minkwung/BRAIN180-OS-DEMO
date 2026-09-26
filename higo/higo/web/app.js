@@ -45,7 +45,7 @@ const KO = {
 const ko = (dict, v) => (KO[dict] && KO[dict][v]) || v;
 const typeKo = (t) => ko("type", t);
 const relKo = (p) => STATE.relKo[p] || p;
-const actorKo = (a) => ({ seed: "초기 데이터", system: "시스템", "ai:discovery": "AI 발견 엔진", human: "사람", import: "가져오기" }[a] || a);
+const actorKo = (a) => ({ seed: "초기 데이터", system: "시스템", "ai:discovery": "AI 발견 엔진", human: "사람", import: "가져오기", data: "데이터 파일", "policy:auto": "위험도 정책(자동)" }[a] || (String(a).startsWith("ai:R") ? `AI 갱신 ${String(a).slice(3)}` : a));
 const label = (id) => {
   const e = STATE.byId.get(id);
   return e ? e.label_ko || e.label : id;
@@ -67,6 +67,13 @@ function resolveInput(v) {
   const low = v.toLowerCase();
   const hit = STATE.entities.find((e) => (e.label_ko || "").toLowerCase() === low || e.label.toLowerCase() === low || (e.aliases || []).some((a) => a.toLowerCase() === low));
   return hit ? hit.id : v;
+}
+
+const VERIFY_KO = { verified: ["원문 일치", "accepted"], partial: ["부분 일치", "proposed"], not_found: ["원문에 없음", "rejected"], fetch_failed: ["문서 열기 실패", "proposed"], no_quote: ["인용문 없음", ""], no_url: ["URL 없음", ""] };
+function verifyBadge(e) {
+  if (!e.verification) return e.url ? '<span class="pill">원문 대조 전</span>' : "";
+  const [t, cls] = VERIFY_KO[e.verification] || [e.verification, ""];
+  return `<span class="pill ${cls}" style="text-decoration:none">${esc(t)}</span>`;
 }
 
 function modeKo(m) {
@@ -91,11 +98,27 @@ function md(text) {
   const inline = (s) =>
     s.replace(/\*\*(.+?)\*\*/g, "<b>$1</b>")
       .replace(/(^|\s)_(.+?)_(?=\s|$)/g, "$1<i>$2</i>")
+      .replace(/`([^`]+)`/g, "<code>$1</code>")
       .replace(/\b(EV\d{5})\b/g, '<span class="tag">$1</span>')
       .replace(/\b(E\d{5})\b/g, '<button class="link" data-edge="$1">$1</button>')
       .replace(/\b((?:prop|person|concept|work):[\w\-]+)/g, '<button class="link" data-node="$1">$1</button>');
+  let table = null;
+  const flushTable = () => {
+    if (!table) return;
+    const [head, ...body] = table;
+    html += `<div class="table-wrap"><table><thead><tr>${head.map((c) => `<th>${inline(c)}</th>`).join("")}</tr></thead><tbody>${body.map((r) => `<tr>${r.map((c) => `<td>${inline(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+    table = null;
+  };
   for (const raw of lines) {
     const l = raw.trimEnd();
+    if (/^\|.*\|$/.test(l)) {
+      if (inList) { html += "</ul>"; inList = false; }
+      const cells = l.slice(1, -1).split("|").map((c) => c.trim());
+      if (cells.every((c) => /^:?-{3,}:?$/.test(c))) continue;
+      (table = table || []).push(cells);
+      continue;
+    }
+    flushTable();
     const m = l.match(/^(#{1,4})\s+(.*)$/);
     if (/^\s*[-*]\s+/.test(l)) {
       if (!inList) { html += "<ul>"; inList = true; }
@@ -107,6 +130,7 @@ function md(text) {
     else if (l.trim()) html += `<p>${inline(l)}</p>`;
   }
   if (inList) html += "</ul>";
+  flushTable();
   return html;
 }
 
@@ -159,7 +183,7 @@ function showTab(name) {
   $$("#tabs button").forEach((b) => b.classList.toggle("active", b.dataset.tab === name));
   $$(".tab").forEach((t) => t.classList.toggle("active", t.id === "tab-" + name));
   history.replaceState(null, "", "#" + name);
-  const loaders = { contradictions: loadContradictions, crossdomain: loadCrossDomain, review: loadReview, ontology: loadOntology, dna: loadLandscape };
+  const loaders = { autonomy: loadAutonomy, contradictions: loadContradictions, crossdomain: loadCrossDomain, review: loadReview, ontology: loadOntology, dna: loadLandscape };
   if (loaders[name] && (!STATE.tabLoaded.has(name) || name === "review")) {
     STATE.tabLoaded.add(name);
     loaders[name]();
@@ -449,7 +473,8 @@ function evidenceHTML(list) {
   const tiers = Object.fromEntries((STATE.schema?.evidence_tiers || []).map((t) => [t.tier, t.label_ko]));
   return list.map((e) => `<div class="evidence t${e.tier} ${e.stance}">
     <div><b>${e.tier}등급</b> <span class="small muted">${esc(tiers[e.tier] || "")}</span> ${e.stance === "contradicts" ? '<span class="pill rejected" style="text-decoration:none">반대 증거</span>' : ""}</div>
-    <div>${e.source_id ? nodeLink(e.source_id, e.source_label || label(e.source_id)) : esc(e.citation)} ${e.locator ? `<span class="muted">· ${esc(e.locator)}</span>` : ""}</div>
+    <div>${e.source_id ? nodeLink(e.source_id, e.source_label || label(e.source_id)) : esc(e.citation)} ${e.locator ? `<span class="muted">· ${esc(e.locator)}</span>` : ""} ${verifyBadge(e)}</div>
+    ${e.url ? `<div class="small"><a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer">${esc(e.url.length > 70 ? e.url.slice(0, 70) + "…" : e.url)}</a></div>` : ""}
     ${e.quotation ? `<div class="small">“${esc(e.quotation)}”</div>` : ""}
     ${e.interpretation ? `<div class="small muted">${esc(e.interpretation)}</div>` : ""}
     <div class="small muted">${esc(e.id)} · ${esc(actorKo(e.added_by))}</div></div>`).join("");
@@ -469,6 +494,9 @@ async function showEdgeDetail(id) {
       <dt>확신도</dt><dd>${conf(e.confidence)}</dd>
       <dt>출처 구분</dt><dd>${esc(ko("origin", e.origin))}</dd>
       ${e.note ? `<dt>메모</dt><dd>${esc(e.note)}</dd>` : ""}
+      ${e.props?.run ? `<dt>갱신 주기</dt><dd>${esc(e.props.run)} · 위험도 ${esc({ low: "낮음", medium: "중간", high: "높음" }[e.props.risk] || e.props.risk)}</dd>` : ""}
+      ${e.props?.auto_accepted ? `<dt>자동 반영</dt><dd>원문 대조 통과 후 정책에 따라 반영 (${esc(e.props.auto_accepted.run)})</dd>` : ""}
+      ${e.props?.review ? `<dt>검토</dt><dd>${esc(e.props.review.actor)} · ${esc(ko("status", e.props.review.status))}${e.props.review.reason ? " — " + esc(e.props.review.reason) : ""}</dd>` : ""}
     </dl>
     ${errs.length ? `<div class="small" style="margin-top:8px">${errs.map((i) => `<div style="color:var(${i.level === "error" ? "--bad" : "--warn"})">${i.level === "error" ? "오류" : "경고"}: ${esc(i.message)}</div>`).join("")}</div>` : ""}
     <h3 style="margin-top:14px">증거 번들</h3>${evidenceHTML(e.evidence)}
@@ -777,6 +805,36 @@ function initForms() {
   $("#conn-a").value = "person:aristotle"; $("#conn-b").value = "person:jefferson";
   $("#cmp-a").value = "person:marx"; $("#cmp-b").value = "person:nietzsche";
   $("#dna-person").value = "person:kant";
+}
+
+/* ------------------------------------------------------------ autonomy */
+const RISK_KO = { low: "자동 반영", medium: "묶음 승인", high: "개별 판단", structural: "구조 변경", rejected: "자동 기각" };
+async function loadAutonomy() {
+  try { $("#auto-reviewer").value = localStorage.getItem("higo-reviewer") || ""; } catch (_) {}
+  const [runs, gaps] = await Promise.all([api("/api/runs"), api("/api/gaps?limit=25")]);
+  $("#runs-list").innerHTML = runs.length ? runs.map((r) => `<div class="rel"><button class="link" data-run="${esc(r.run_id)}">${esc(r.run_id)}</button>
+      ${r.ok ? '<span class="pill accepted">병합 가능</span>' : '<span class="pill rejected" style="text-decoration:none">보류</span>'}
+      <span class="small muted">${Object.entries(r.risk_counts).map(([k, n]) => `${RISK_KO[k] || k} ${n}`).join(" · ") || "변경 제안 없음"}</span>
+      ${r.pending_batch ? `<button class="small ok" data-approve-run="${esc(r.run_id)}" style="margin-left:auto">묶음 승인 (${r.pending_batch})</button>` : ""}</div>`).join("")
+    : '<p class="muted small">아직 실행된 주기가 없습니다. <code>python -m higo cycle --changeset 파일.json</code> 으로 시작합니다.</p>';
+  $("#runs-list").querySelectorAll("[data-run]").forEach((b) => b.addEventListener("click", async () => {
+    const d = await api("/api/runs/" + b.dataset.run);
+    $("#run-report").classList.remove("muted");
+    $("#run-report").innerHTML = md(d.report || "보고서 없음");
+  }));
+  $("#runs-list").querySelectorAll("[data-approve-run]").forEach((b) => b.addEventListener("click", async () => {
+    const actor = $("#auto-reviewer").value.trim();
+    if (!actor) { toast("검토자 이름을 입력하세요."); $("#auto-reviewer").focus(); return; }
+    try { localStorage.setItem("higo-reviewer", actor); } catch (_) {}
+    if (!confirm(`${b.dataset.approveRun} 의 승인 대기 항목을 모두 승인할까요?`)) return;
+    try {
+      const r = await api(`/api/runs/${b.dataset.approveRun}/approve`, { body: { actor } });
+      toast(`${r.approved.length}건 승인${r.failed.length ? `, ${r.failed.length}건 실패` : ""}`);
+      refreshQueueCount(); loadAutonomy();
+    } catch (e) { toast(e.message); }
+  }));
+  $("#gaps-out").innerHTML = `<div class="tags" style="margin-bottom:8px">${Object.values(gaps.summary).map((v) => `<span class="tag">${esc(v.label_ko)} ${v.count}</span>`).join("")}</div>
+    ${gaps.tasks.map((t) => `<div class="issue small"><div class="row"><b>${esc(t.label_ko)}</b><span class="muted">우선순위 ${t.priority.toFixed(2)}</span>${t.target ? nodeLink(t.target, t.target_label) : ""}</div><div>${esc(t.action)}</div>${t.detail ? `<div class="muted">${esc(t.detail)}</div>` : ""}</div>`).join("")}`;
 }
 
 /* ------------------------------------------------------------- ontology */

@@ -11,6 +11,17 @@
     python -m higo queue | review E00123 approve --actor 홍길동 --reason "원전 확인"
     python -m higo ingest 파일.txt --title ... --author person:x [--llm]
     python -m higo validate | stats | export cypher > higo.cypher
+
+  자동 갱신 (1단계: 검증 기반)
+    python -m higo data export              # 현재 온톨로지를 data/ 파일로 저장
+    python -m higo gaps [--json]            # 공백 분석 — 다음에 보강할 곳
+    python -m higo verify                   # 기존 증거의 URL·인용문 원문 대조
+    python -m higo cycle --changeset p.json # 변경 묶음 적용 → 검증 → 보고서(data/runs/)
+    python -m higo approve --run R… --actor 이름   # 주기 단위 묶음 승인
+    python -m higo bench                    # 품질 기준 질문 채점
+
+데이터의 원본은 data/ 디렉터리의 텍스트 파일이다 (--db 를 주지 않으면 메모리에서 작업 후
+변경 명령은 data/ 에 다시 저장한다).
 """
 from __future__ import annotations
 
@@ -18,7 +29,7 @@ import argparse
 import json
 import sys
 
-from . import export
+from . import datafiles, export
 from .core import HIGO
 from .validation import ReviewError
 
@@ -38,7 +49,8 @@ def _resolve(h: HIGO, ref: str) -> str:
 
 def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser(prog="higo", description="Human Intellectual Genealogy Ontology")
-    ap.add_argument("--db", default="higo.db")
+    ap.add_argument("--db", default=":memory:", help="SQLite 캐시 경로 (기본: 메모리)")
+    ap.add_argument("--data", default=str(datafiles.DEFAULT_DATA_DIR), help="온톨로지 데이터 디렉터리")
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("init")
     s = sub.add_parser("serve")
@@ -99,16 +111,48 @@ def main(argv: list[str] | None = None) -> None:
     s.add_argument("--note", default="")
     s = sub.add_parser("history")
     s.add_argument("id", nargs="?")
+    s = sub.add_parser("data", help="데이터 파일 관리")
+    s.add_argument("action", choices=["export", "check", "reseed"])
+    s = sub.add_parser("gaps")
+    s.add_argument("--json", action="store_true")
+    s.add_argument("--limit", type=int, default=40)
+    s = sub.add_parser("verify")
+    s.add_argument("--edge", action="append", help="특정 관계의 증거만")
+    s = sub.add_parser("cycle")
+    s.add_argument("--changeset")
+    s.add_argument("--no-reverify", action="store_true")
+    s.add_argument("--dry-run", action="store_true", help="파일을 쓰지 않고 보고서만 출력")
+    s = sub.add_parser("approve")
+    s.add_argument("--run", required=True)
+    s.add_argument("--actor", required=True)
+    s.add_argument("--reason", default="")
+    sub.add_parser("bench")
     args = ap.parse_args(argv)
 
     if args.cmd == "serve":
         from .server import serve
-        serve(args.db, args.host, args.port)
+        serve(args.db, args.host, args.port, data_dir=args.data)
         return
+    if args.cmd == "cycle":
+        from .changeset import load_changeset
+        from .cycle import run_cycle
+        cs = load_changeset(args.changeset) if args.changeset else None
+        rec = run_cycle(args.data, cs, reverify_existing=not args.no_reverify, write=not args.dry_run)
+        print(rec["report"])
+        if not args.dry_run:
+            print(f"\n기록: {args.data}/runs/{rec['run_id']}.json · 보고서: {args.data}/runs/{rec['run_id']}.md",
+                  file=sys.stderr)
+        sys.exit(0 if rec["ok"] else 2)
 
-    h = HIGO(args.db)
+    h = HIGO(args.db, data_dir=args.data)
+    if args.cmd == "data" and args.action == "reseed":
+        from .seed import load_seed
+        load_seed(h.store)
+        _p(h.export_data(args.data))
+        return
     if args.cmd != "import":
         h.seed()
+    mutating = {"review", "evidence", "ingest", "import", "snapshot", "approve", "verify"}
     r = h.reasoner
     if args.cmd == "init":
         _p(h.store.stats())
@@ -186,6 +230,36 @@ def main(argv: list[str] | None = None) -> None:
         _p(h.store.snapshot_version(args.version, args.note))
     elif args.cmd == "history":
         _p(h.store.history(args.id))
+    elif args.cmd == "data":
+        if args.action == "export":
+            _p(h.export_data(args.data))
+        else:
+            _p({"loaded": h.store.stats(), "validation": h.validate()["ok"]})
+    elif args.cmd == "gaps":
+        from . import gaps
+        res = gaps.analyze(h.store, gaps.load_roadmap(args.data), limit=args.limit)
+        _p(res) if args.json else print(gaps.to_markdown(res, top=args.limit))
+    elif args.cmd == "verify":
+        from .verify import QuoteVerifier
+        ids = None
+        if args.edge:
+            ids = [ev["id"] for e in args.edge for ev in h.store.list_evidence(e)]
+        _p(QuoteVerifier().verify_store(h.store, ids)["counts"])
+    elif args.cmd == "approve":
+        from .changeset import approve_run
+        try:
+            _p(approve_run(h.store, args.run, args.actor, args.reason))
+        except ReviewError as exc:
+            sys.exit(f"approve failed: {exc}")
+    elif args.cmd == "bench":
+        from .bench import load_benchmark, run_benchmark
+        res = run_benchmark(h, load_benchmark(f"{args.data}/benchmark.json"))
+        print(f"품질 기준 점수: {res['score']:.1%} ({res['n']}문항)")
+        for i in res["items"]:
+            print(f"  {'✓' if not i['failed'] else '✗'} {i['question']}" + (f"  — {'; '.join(i['failed'])}" if i["failed"] else ""))
+    if args.cmd in mutating and args.db == ":memory:" and datafiles.has_data(args.data):
+        h.export_data(args.data)
+        print(f"(data/ 에 저장됨: {args.data})", file=sys.stderr)
 
 
 if __name__ == "__main__":

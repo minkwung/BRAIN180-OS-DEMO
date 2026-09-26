@@ -1,0 +1,27 @@
+{"id":"domain:algebra","type":"Domain","label":"Algebra","label_ko":"대수학","origin":"seed","status":"accepted"}
+{"id":"domain:analysis","type":"Domain","label":"Analysis","label_ko":"해석학","origin":"seed","status":"accepted"}
+{"id":"domain:art","type":"Domain","label":"Art","label_ko":"예술","origin":"seed","status":"accepted"}
+{"id":"domain:astronomy","type":"Domain","label":"Astronomy","label_ko":"천문학","origin":"seed","status":"accepted"}
+{"id":"domain:biology","type":"Domain","label":"Biology","label_ko":"생물학","origin":"seed","status":"accepted"}
+{"id":"domain:chemistry","type":"Domain","label":"Chemistry","label_ko":"화학","origin":"seed","status":"accepted"}
+{"id":"domain:economics","type":"Domain","label":"Economics","label_ko":"경제학","origin":"seed","status":"accepted"}
+{"id":"domain:epistemology","type":"Domain","label":"Epistemology","label_ko":"인식론","origin":"seed","status":"accepted"}
+{"id":"domain:ethics","type":"Domain","label":"Ethics","label_ko":"윤리학","origin":"seed","status":"accepted"}
+{"id":"domain:geometry","type":"Domain","label":"Geometry","label_ko":"기하학","origin":"seed","status":"accepted"}
+{"id":"domain:law","type":"Domain","label":"Law","label_ko":"법학","origin":"seed","status":"accepted"}
+{"id":"domain:literature","type":"Domain","label":"Literature","label_ko":"문학","origin":"seed","status":"accepted"}
+{"id":"domain:logic","type":"Domain","label":"Logic","label_ko":"논리학","origin":"seed","status":"accepted"}
+{"id":"domain:mathematical-logic","type":"Domain","label":"Mathematical Logic","label_ko":"수리논리학","origin":"seed","status":"accepted"}
+{"id":"domain:mathematics","type":"Domain","label":"Mathematics","label_ko":"수학","origin":"seed","status":"accepted"}
+{"id":"domain:metaphysics","type":"Domain","label":"Metaphysics","label_ko":"형이상학","origin":"seed","status":"accepted"}
+{"id":"domain:number-theory","type":"Domain","label":"Number Theory","label_ko":"정수론","origin":"seed","status":"accepted"}
+{"id":"domain:philosophy","type":"Domain","label":"Philosophy","label_ko":"철학","origin":"seed","status":"accepted"}
+{"id":"domain:philosophy-of-language","type":"Domain","label":"Philosophy of Language","label_ko":"언어철학","origin":"seed","status":"accepted"}
+{"id":"domain:philosophy-of-science","type":"Domain","label":"Philosophy of Science","label_ko":"과학철학","origin":"seed","status":"accepted"}
+{"id":"domain:physics","type":"Domain","label":"Physics","label_ko":"물리학","origin":"seed","status":"accepted"}
+{"id":"domain:political-philosophy","type":"Domain","label":"Political Philosophy","label_ko":"정치철학","origin":"seed","status":"accepted"}
+{"id":"domain:politics","type":"Domain","label":"Politics","label_ko":"정치","origin":"seed","status":"accepted"}
+{"id":"domain:psychology","type":"Domain","label":"Psychology","label_ko":"심리학","origin":"seed","status":"accepted"}
+{"id":"domain:science","type":"Domain","label":"Science","label_ko":"과학","origin":"seed","status":"accepted"}
+{"id":"domain:sociology","type":"Domain","label":"Sociology","label_ko":"사회학","origin":"seed","status":"accepted"}
+{"id":"domain:theology","type":"Domain","label":"Theology","label_ko":"신학","origin":"seed","status":"accepted"}

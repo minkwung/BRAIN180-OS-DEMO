@@ -65,6 +65,10 @@ def _routes():
         ("GET", r"/api/versions", "versions"),
         ("POST", r"/api/versions", "snapshot"),
         ("GET", r"/api/export/(?P<fmt>json|cypher|turtle)", "export"),
+        ("GET", r"/api/gaps", "gaps"),
+        ("GET", r"/api/runs", "runs"),
+        ("GET", r"/api/runs/(?P<id>R[\w\-]+)", "run_detail"),
+        ("POST", r"/api/runs/(?P<id>R[\w\-]+)/approve", "run_approve"),
     ]
     return [(m, re.compile("^" + p + "$"), h) for m, p, h in r]
 
@@ -77,6 +81,12 @@ class Api:
 
     def __init__(self, higo: HIGO):
         self.h = higo
+
+    def persist(self) -> None:
+        """웹 UI 에서 한 검토·수정을 data/ 파일에 반영한다 (Ontology as Code)."""
+        from . import datafiles
+        if self.h.data_dir and datafiles.has_data(self.h.data_dir) and self.h.store.path == ":memory:":
+            self.h.export_data()
 
     def dispatch(self, method: str, path: str, query: dict, body: dict | None):
         for m, rx, name in ROUTES:
@@ -317,6 +327,50 @@ class Api:
             raise ApiError(400, "version required")
         return self.h.store.snapshot_version(body["version"], body.get("note", ""))
 
+    # ------------------------------------------------------ autonomy
+    def _runs_dir(self):
+        from pathlib import Path
+        return Path(self.h.data_dir) / "runs" if self.h.data_dir else None
+
+    def gaps(self, query, **_):
+        from . import gaps
+        return gaps.analyze(self.h.store, gaps.load_roadmap(self.h.data_dir), limit=int(self._q(query, "limit", 40)))
+
+    def runs(self, **_):
+        d = self._runs_dir()
+        if not d or not d.is_dir():
+            return []
+        out = []
+        for f in sorted(d.glob("R*.json"), reverse=True):
+            rec = json.loads(f.read_text(encoding="utf-8"))
+            results = (rec.get("changeset") or {}).get("results", [])
+            counts: dict = {}
+            for r in results:
+                counts[r["risk"]] = counts.get(r["risk"], 0) + 1
+            pending = sum(1 for e in self.h.store.list_edges(statuses=["proposed"])
+                          if (e.get("props") or {}).get("run") == rec["run_id"])
+            out.append({"run_id": rec["run_id"], "ok": rec.get("ok"), "started": rec.get("started"),
+                        "risk_counts": counts, "pending_batch": pending,
+                        "score": (rec.get("benchmark_after") or {}).get("score")})
+        return out
+
+    def run_detail(self, query, id, **_):
+        d = self._runs_dir()
+        f = d / f"{id}.json" if d else None
+        if not f or not f.is_file():
+            raise ApiError(404, f"run not found: {id}")
+        rec = json.loads(f.read_text(encoding="utf-8"))
+        md = (d / f"{id}.md")
+        rec["report"] = md.read_text(encoding="utf-8") if md.is_file() else ""
+        return rec
+
+    def run_approve(self, body, id, **_):
+        from .changeset import approve_run
+        try:
+            return approve_run(self.h.store, id, body.get("actor", ""), body.get("reason", ""))
+        except ReviewError as exc:
+            raise ApiError(400, str(exc)) from exc
+
     def export(self, query, fmt, **_):
         if fmt == "json":
             return export.to_json(self.h.store)
@@ -360,6 +414,8 @@ def make_handler(api: Api):
                     return self._send(400, {"error": "invalid JSON"})
             try:
                 result = api.dispatch(method, url.path, parse_qs(url.query), body)
+                if method == "POST" and url.path not in ("/api/ask", "/api/discover"):
+                    api.persist()
                 if isinstance(result, tuple):
                     ctype, text = result
                     return self._send(200, text, ctype)
@@ -391,12 +447,13 @@ def make_handler(api: Api):
     return Handler
 
 
-def serve(db: str = "higo.db", host: str = "127.0.0.1", port: int = 8180, seed: bool = True) -> None:
-    h = HIGO(db)
+def serve(db: str = ":memory:", host: str = "127.0.0.1", port: int = 8180, seed: bool = True,
+          data_dir=None) -> None:
+    h = HIGO(db, data_dir=data_dir)
     if seed:
         h.seed()
     httpd = ThreadingHTTPServer((host, port), make_handler(Api(h)))
-    print(f"HIGO serving on http://{host}:{port}  (db={db}, llm={h.llm.status()})")
+    print(f"HIGO serving on http://{host}:{port}  (db={db}, data={data_dir}, llm={h.llm.status()})")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

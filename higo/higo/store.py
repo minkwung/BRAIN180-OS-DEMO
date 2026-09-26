@@ -64,7 +64,12 @@ CREATE TABLE IF NOT EXISTS evidence (
     quotation TEXT DEFAULT '',
     interpretation TEXT DEFAULT '',
     added_by TEXT DEFAULT 'seed',
-    created_at REAL
+    created_at REAL,
+    url TEXT DEFAULT '',
+    retrieved_at REAL,
+    content_hash TEXT DEFAULT '',
+    verification TEXT DEFAULT '',
+    verified_at REAL
 );
 CREATE INDEX IF NOT EXISTS idx_evidence_edge ON evidence(edge_id);
 CREATE TABLE IF NOT EXISTS history (
@@ -119,9 +124,21 @@ class Store:
             self._conn.execute("PRAGMA synchronous = NORMAL")
         self._lock = threading.RLock()
         self._conn.executescript(SCHEMA_SQL)
+        self._migrate()
         self._revision = 0  # 그래프 캐시 무효화용
         if self.get_meta("schema_version") is None:
             self.set_meta("schema_version", O.SCHEMA_VERSION)
+
+    EVIDENCE_EXTRA_COLUMNS = {"url": "TEXT DEFAULT ''", "retrieved_at": "REAL", "content_hash": "TEXT DEFAULT ''",
+                              "verification": "TEXT DEFAULT ''", "verified_at": "REAL"}
+
+    def _migrate(self) -> None:
+        """이전 버전 DB 에 새 열을 추가한다."""
+        cols = {r["name"] for r in self._conn.execute("PRAGMA table_info(evidence)")}
+        for name, decl in self.EVIDENCE_EXTRA_COLUMNS.items():
+            if name not in cols:
+                self._conn.execute(f"ALTER TABLE evidence ADD COLUMN {name} {decl}")
+        self._conn.commit()
 
     # ------------------------------------------------------------------ meta
     @property
@@ -157,6 +174,15 @@ class Store:
             self._conn.execute("INSERT OR REPLACE INTO meta(key, value) VALUES (?, ?)",
                                (f"counter:{counter}", str(cur)))
             return f"{prefix}{cur:0{width}d}"
+
+    def _reserve_id(self, counter: str, prefix: str, given: str) -> None:
+        m = given[len(prefix):]
+        if given.startswith(prefix) and m.isdigit():
+            with self._lock:
+                cur = int(self.get_meta(f"counter:{counter}") or 0)
+                if int(m) > cur:
+                    self._conn.execute("INSERT OR REPLACE INTO meta(key, value) VALUES (?, ?)",
+                                       (f"counter:{counter}", m.lstrip("0") or "0"))
 
     def _log(self, c, kind: str, oid: str, action: str, before: Any, after: Any,
              actor: str = "system", reason: str = "") -> None:
@@ -236,7 +262,7 @@ class Store:
                  epistemic_status: str = "proposed", origin: str = "human", note: str = "",
                  props: dict | None = None, confidence_override: float | None = None,
                  valid_from: int | None = None, valid_to: int | None = None,
-                 actor: str = "system") -> dict:
+                 actor: str = "system", edge_id: str | None = None) -> dict:
         O.relation(predicate)
         if evidence_status not in O.EVIDENCE_STATUS:
             raise ValueError(f"unknown evidence_status: {evidence_status}")
@@ -248,7 +274,13 @@ class Store:
         existing = self.find_edge(source, predicate, target)
         if existing:
             return existing
-        eid = self._next_id("edge", "E")
+        if edge_id:
+            if self.get_edge(edge_id):
+                raise ValueError(f"edge id already used: {edge_id}")
+            self._reserve_id("edge", "E", edge_id)
+            eid = edge_id
+        else:
+            eid = self._next_id("edge", "E")
         now = _now()
         with self.tx() as c:
             c.execute(
@@ -330,7 +362,10 @@ class Store:
     # -------------------------------------------------------------- evidence
     def add_evidence(self, edge_id: str, *, tier: int, source_id: str | None = None, citation: str = "",
                      stance: str = "supports", locator: str = "", quotation: str = "",
-                     interpretation: str = "", added_by: str = "seed", recompute: bool = True) -> dict:
+                     interpretation: str = "", added_by: str = "seed", recompute: bool = True,
+                     url: str = "", retrieved_at: float | None = None, content_hash: str = "",
+                     verification: str = "", verified_at: float | None = None,
+                     evidence_id: str | None = None, log: bool = True) -> dict:
         if tier not in O.EVIDENCE_TIERS:
             raise ValueError(f"invalid tier: {tier}")
         if stance not in ("supports", "contradicts"):
@@ -339,18 +374,44 @@ class Store:
             raise KeyError(f"source entity not found: {source_id}")
         if not self.get_edge(edge_id):
             raise KeyError(f"edge not found: {edge_id}")
-        evid = self._next_id("evidence", "EV")
+        if evidence_id:
+            self._reserve_id("evidence", "EV", evidence_id)
+            evid = evidence_id
+        else:
+            evid = self._next_id("evidence", "EV")
         row = dict(id=evid, edge_id=edge_id, source_id=source_id, citation=citation, tier=tier, stance=stance,
-                   locator=locator, quotation=quotation, interpretation=interpretation, added_by=added_by)
+                   locator=locator, quotation=quotation, interpretation=interpretation, added_by=added_by,
+                   url=url, retrieved_at=retrieved_at, content_hash=content_hash, verification=verification,
+                   verified_at=verified_at)
         with self.tx() as c:
             c.execute(
                 "INSERT INTO evidence(id, edge_id, source_id, citation, tier, stance, locator, quotation,"
-                " interpretation, added_by, created_at) VALUES (:id,:edge_id,:source_id,:citation,:tier,:stance,"
-                ":locator,:quotation,:interpretation,:added_by,:now)", {**row, "now": _now()})
-            self._log(c, "evidence", evid, "create", None, row, added_by)
+                " interpretation, added_by, created_at, url, retrieved_at, content_hash, verification, verified_at)"
+                " VALUES (:id,:edge_id,:source_id,:citation,:tier,:stance,:locator,:quotation,:interpretation,"
+                ":added_by,:now,:url,:retrieved_at,:content_hash,:verification,:verified_at)", {**row, "now": _now()})
+            if log:
+                self._log(c, "evidence", evid, "create", None, row, added_by)
         if recompute:
             self.recompute_confidence(edge_id, actor=added_by, reason=f"evidence {evid} added")
         return row
+
+    def set_evidence_verification(self, evidence_id: str, *, verification: str, url: str | None = None,
+                                  retrieved_at: float | None = None, content_hash: str = "",
+                                  actor: str = "verifier") -> None:
+        fields = {"verification": verification, "verified_at": _now(), "content_hash": content_hash,
+                  "retrieved_at": retrieved_at}
+        if url is not None:
+            fields["url"] = url
+        sets = ", ".join(f"{k}=?" for k in fields)
+        with self.tx() as c:
+            c.execute(f"UPDATE evidence SET {sets} WHERE id=?", [*fields.values(), evidence_id])
+            self._log(c, "evidence", evidence_id, "verify", None, {"verification": verification}, actor)
+        row = self._conn.execute("SELECT edge_id FROM evidence WHERE id=?", (evidence_id,)).fetchone()
+        if row:
+            self.recompute_confidence(row["edge_id"], actor=actor, reason=f"{evidence_id} 원문 대조: {verification}")
+
+    def all_evidence(self) -> list[dict]:
+        return [dict(r) for r in self._conn.execute("SELECT * FROM evidence ORDER BY id")]
 
     def list_evidence(self, edge_id: str) -> list[dict]:
         rows = self._conn.execute("SELECT * FROM evidence WHERE edge_id=? ORDER BY tier, id", (edge_id,))

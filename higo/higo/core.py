@@ -18,7 +18,8 @@ from .vector import VectorIndex, entity_text
 
 
 class HIGO:
-    def __init__(self, db_path: str = ":memory:", llm: LLMClient | None = None):
+    def __init__(self, db_path: str = ":memory:", llm: LLMClient | None = None, data_dir=None):
+        self.data_dir = data_dir
         self.store = Store(db_path)
         self.graph = GraphIndex(self.store)
         self.llm = llm if llm is not None else LLMClient()
@@ -63,5 +64,16 @@ class HIGO:
         return validate_graph(self.store).as_dict()
 
     def seed(self) -> dict:
+        """빈 저장소를 채운다: 데이터 파일(data/)이 있으면 그것을, 없으면 Phase 1 seed 를 적재."""
+        from . import datafiles
         from .seed import load_seed
+        if self.store.stats()["entities"]:
+            return {"skipped": True, **self.store.stats()}
+        if self.data_dir is not None and datafiles.has_data(self.data_dir):
+            datafiles.load_data(self.store, self.data_dir)
+            return self.store.stats()
         return load_seed(self.store)
+
+    def export_data(self, data_dir=None) -> dict:
+        from . import datafiles
+        return datafiles.export_data(self.store, data_dir or self.data_dir or datafiles.DEFAULT_DATA_DIR)

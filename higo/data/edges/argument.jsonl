@@ -1,0 +1,7 @@
+{"id":"E01292","source":"prop:descartes-doubt","predicate":"premise_of","target":"arg:cogito-argument","evidence_status":"direct","epistemic_status":"accepted","confidence":1.0,"origin":"seed"}
+{"id":"E01293","source":"arg:cogito-argument","predicate":"concludes","target":"prop:descartes-cogito","evidence_status":"direct","epistemic_status":"accepted","confidence":1.0,"origin":"seed"}
+{"id":"E01295","source":"prop:hume-uniformity","predicate":"premise_of","target":"arg:hume-induction-argument","evidence_status":"direct","epistemic_status":"accepted","confidence":1.0,"origin":"seed"}
+{"id":"E01296","source":"arg:hume-induction-argument","predicate":"concludes","target":"prop:hume-induction","evidence_status":"direct","epistemic_status":"accepted","confidence":1.0,"origin":"seed"}
+{"id":"E01298","source":"prop:hume-induction","predicate":"premise_of","target":"arg:popper-deductivism","evidence_status":"direct","epistemic_status":"accepted","confidence":1.0,"origin":"seed"}
+{"id":"E01299","source":"prop:popper-falsifiability","predicate":"premise_of","target":"arg:popper-deductivism","evidence_status":"direct","epistemic_status":"accepted","confidence":1.0,"origin":"seed"}
+{"id":"E01300","source":"arg:popper-deductivism","predicate":"concludes","target":"prop:popper-solution-induction","evidence_status":"direct","epistemic_status":"accepted","confidence":1.0,"origin":"seed"}

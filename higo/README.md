@@ -23,7 +23,7 @@
 
 ```bash
 cd higo
-python -m higo serve            # http://127.0.0.1:8180 — 처음 실행 시 Phase 1 seed 자동 적재
+python -m higo serve            # http://127.0.0.1:8180 — data/ 의 온톨로지를 적재 (UI 에서의 검토는 data/ 에 저장)
 python -m unittest discover -s tests
 ```
 
@@ -160,6 +160,18 @@ python -m higo export turtle > higo.ttl         # 트리플스토어
 | POST | `/api/edges`, `/api/edges/{id}/evidence`, `/api/edges/{id}/review` | 관계 등록 · 증거 · 검증 |
 | POST | `/api/extract`, `/api/candidates/{id}/approve` | 원전 추출 · 후보 채택 |
 | GET | `/api/export/{json,cypher,turtle}` | 내보내기 |
+
+## 자동 갱신 (Claude 가 스스로 넓히고 사람은 승인만)
+
+온톨로지의 원본은 `data/` 의 텍스트 파일입니다. Claude 가 제안한 변경은 **인용문 원문 대조 → 위험도 정책 →
+등급별 반영**을 거쳐 주기별 보고서(`data/runs/`)로 올라오고, 사람은 PR 과 웹 UI 의 **자동 갱신** 탭에서 확인·승인합니다.
+자세한 내용은 [`docs/AUTONOMY.md`](docs/AUTONOMY.md) 를 보세요.
+
+```bash
+python -m higo cycle --changeset examples/changeset.example.json --dry-run
+python -m higo gaps
+python -m higo bench
+```
 
 ## 확장 로드맵
 
